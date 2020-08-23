@@ -1,0 +1,85 @@
+{% load i18n %}
+
+<nav id="top_page" class="uk-navbar-container accounts" uk-navbar>
+    {# This is used in mobile view #}
+    <div class="uk-navbar-right">
+                {% block nav_account_languages %}
+        {% if LANGUAGES|length > 1 %}
+            <form id="language_selector" class="navbar-left navbar-form" action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ language_neutral_url_path }}" />
+                <div class="form-group">
+                    <select name="language" class="form-control">
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE%} selected="selected"{% endif %}>
+                                {{ language.name_local }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="btn btn-default" type="submit" data-loading-text="{% trans 'Submitting...' %}">{% trans "Go" %}</button>
+            </form>
+        {% endif %}
+                {% endblock %}
+        <ul class="uk-navbar-nav uk-visible@l">
+            {% if user.is_authenticated %}
+            {% block nav_account_navbar_authenticated %}
+                <li>
+                    {% if num_unread_notifications > 0 %}
+                        {# If user has new notifications - we change account link to go to inbox #}
+                        <a href="{% url 'customer:notifications-inbox' %}">
+                            <i class="icon-user"></i>
+                            {% trans "Account" %}
+                            <span class="label label-warning">{{ num_unread_notifications }}</span>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'customer:summary' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
+                    {% endif %}
+                </li>
+                {% if user.is_staff or perms.partner.dashboard_access %}
+                    <li><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
+                {% endif %}
+                <li><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
+                    {% endblock %}
+            {% else %}
+                <li><a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
+            {% endif %}
+        </ul>
+
+        <a class="uk-navbar-toggle uk-hidden@m" uk-toggle="target: #offcanvas-nav" href="#">
+            <span uk-navbar-toggle-icon></span>
+        </a>
+    </div>
+</nav>
+
+<div id="offcanvas-nav" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <ul class="uk-nav uk-nav-default">
+            {% if user.is_authenticated %}
+            {% block nav_account_navbar_authenticated_offcanvas %}
+                <li>
+                    {% if num_unread_notifications > 0 %}
+                        {# If user has new notifications - we change account link to go to inbox #}
+                        <a href="{% url 'customer:notifications-inbox' %}">
+                            <i class="icon-user"></i>
+                            {% trans "Account" %}
+                            <span class="label label-warning">{{ num_unread_notifications }}</span>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'customer:summary' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
+                    {% endif %}
+                </li>
+                {% if user.is_staff or perms.partner.dashboard_access %}
+                    <li><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
+                {% endif %}
+                <li><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
+                    {% endblock %}
+            {% else %}
+                <li><a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
+            {% endif %}
+        </ul>
+
+    </div>
+</div>

@@ -1,0 +1,11 @@
+{% if breadcrumbs %}
+	<nav class="uk-child-width-expand" uk-grid>
+	    <div>
+	        <ul class="uk-breadcrumb">
+	        	{% for breadcrumb in breadcrumbs %}
+	            <li><a href="{{ breadcrumb.url }}">{{ breadcrumb.text }}</a></li>
+	        	{% endfor %}
+	        </ul>
+	    </div>
+	</nav>
+{% endif %}

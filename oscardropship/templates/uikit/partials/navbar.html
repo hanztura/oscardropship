@@ -1,0 +1,24 @@
+<nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" uk-navbar>
+
+    <div class="uk-navbar-left">
+
+        <a class="uk-navbar-item uk-logo" href="{{ homepage_url }}">{% block brand_title %}{{ shop_name }}{% endblock %}</a>
+
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="{{ homepage_url }}">Home</a></li>
+            <li><a href="#">Contact us</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="{% url 'catalogue:index' %}">Shop</a></li>
+        </ul>
+
+    </div>
+
+    <div class="uk-navbar-right">
+        <ul class="uk-iconnav">
+            <li><a href="#" uk-icon="icon: search"></a></li>
+            <li><a href="#" uk-icon="icon: user"></a></li>
+            <li><a href="#" uk-icon="icon: settings"></a></li>
+            <li><a href="#" uk-icon="icon: cart"></a></li>
+        </ul>
+    </div>
+</nav>

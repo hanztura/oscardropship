@@ -1,0 +1,7 @@
+django-admin-env-notice
+django-admin-honeypot
+django-compressor
+django-extensions
+django-grappelli
+django-redis
+django-sekizai

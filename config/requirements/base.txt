@@ -1,0 +1,8 @@
+django==2.2.15
+django-extensions==3.0.5
+django-oscar==2.1
+easy-thumbnails==2.7
+psycopg2==2.8.4
+pycountry==20.7.3
+sorl-thumbnail==12.6.3
+wagtail==2.10

@@ -1,0 +1,40 @@
+{% extends "uikit/layout.html" %}
+
+{% load basket_tags %}
+{% load category_tags %}
+{% load product_tags %}
+{% load i18n %}
+{% load static %}
+{% load easy_thumbnails_tags %}
+
+{% block title %}
+    {% if summary %}{{ summary }} |{% endif %} {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav class="uk-child-width-expand uk-padding-large uk-padding-remove-vertical" uk-grid>
+        <div>
+            <ul class="uk-breadcrumb">
+                <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+                <li><a href="#">{{ summary }}</a></li>
+            </ul>
+        </div>
+    </nav>
+{% endblock breadcrumbs %}
+
+{% block content_wrapper %}
+
+    <!-- Collections -->
+    <div class="uk-child-width-expand@s" uk-grid>
+        {% category_tree as tree_categories %}
+        {% if tree_categories %}
+            {% for tree_category in tree_categories %}
+                <div class="uk-width-1-2@m">
+                    <div class="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="{% if tree_category.image %}{% thumbnail tree_category.image 580x450 %}{% else %}#!{% endif %}" uk-img>
+                      <h2><a class="uk-button uk-button-secondary" href="{{ tree_category.url }}">{{ tree_category.name }}</a></h2>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>   
+{% endblock content_wrapper %}

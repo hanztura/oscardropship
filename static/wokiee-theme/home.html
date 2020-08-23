@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/uikit.min.css" />
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+        <style type="text/css">
+            .site-main-color {
+                color: #12AFA3 !important;
+            }
+            .site-main-background {
+                background-color: #12AFA3 !important;
+            }
+            .white-text {
+                color: white !important;
+            }
+        </style>
+    </head>
+    <body class="uk-container">
+        <header>
+            <!-- Information Bar -->
+            <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical  site-main-background" uk-navbar>
+                <!-- Contact -->
+                <div class="uk-navbar-left" style="color: white;">
+                    <span><a href="#" uk-icon="icon: mail"></a>info@example.com</span>
+                    <span><a href="#" uk-icon="icon: comment"></a>m.me/examplecom</span>
+                </div>
+                <!-- Social Media Icons -->
+                <div class="uk-navbar-right">
+                    <ul class="uk-iconnav">
+                        <li><a href="#" uk-icon="icon: google" class="white-text"></a></li>
+                        <li><a href="#" uk-icon="icon: twitter" class="white-text"></a></li>
+                        <li><a href="#" uk-icon="icon: pinterest" class="white-text"></a></li>
+                        <li><a href="#" uk-icon="icon: instagram" class="white-text"></a></li>
+                        <li><a href="#" uk-icon="icon: facebook" class="white-text"></a></li>
+                    </ul>
+                </div>
+            </nav>
+ 
+            <!-- Navbar -->
+            <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" uk-navbar>
+
+                <div class="uk-navbar-left">
+
+                    <a class="uk-navbar-item uk-logo" href="#">Oscar</a>
+
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active"><a href="#">Home</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="collections.html">Shop</a></li>
+                    </ul>
+
+                </div>
+
+                <div class="uk-navbar-right">
+                    <ul class="uk-iconnav">
+                        <li><a href="#" uk-icon="icon: search"></a></li>
+                        <li><a href="#" uk-icon="icon: user"></a></li>
+                        <li><a href="#" uk-icon="icon: settings"></a></li>
+                        <li><a href="#" uk-icon="icon: cart"></a></li>
+                    </ul>
+                </div>
+
+            </nav>
+        </header>
+
+        <main>
+            <!-- Banner -->
+            <div class="uk-child-width-expand@s" uk-grid>
+                <div>
+                    <div class="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="images/jason-dent-itA0ybdIDTs-unsplash.jpg" uk-img>
+                      <h1>Background Image</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collections -->
+            <div class="uk-child-width-expand@s" uk-grid>
+                <div>
+                    <div class="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="images/jason-dent-itA0ybdIDTs-unsplash.jpg" uk-img>
+                      <h3>Collection 1</h3>
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-height-large uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light" data-src="images/jason-dent-itA0ybdIDTs-unsplash.jpg" uk-img>
+                      <h3>Collection 2</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Items -->
+            <div x-data="{ tab: 'new-arivals' }" class="uk-child-width-1-1@s" uk-grid>
+                <div>
+                    <ul class="uk-flex-center" uk-tab>
+                        <li x-on:click="tab = 'new-arivals'"><a href="#">NEW ARRIVALS</a></li>
+                        <li x-on:click="tab = 'specials'"><a href="#">SPECIALS</a></li>
+                        <li x-on:click="tab = 'bestsellers'"><a href="#">BESTSELLERS</a></li>
+                        <li x-on:click="tab = 'most-viewed'"><a href="#">MOST VIEWED</a></li>
+                        <li x-on:click="tab = 'featured-products'"><a href="#">FEATURED PRODUCTS</a></li>
+                    </ul>
+                </div>
+
+                <template x-if="tab == 'new-arivals'">
+                    <div>
+                        <div class="uk-child-width-1-3@l uk-child-width-1-2@m" uk-grid>
+                            <div>
+                                <div class="uk-card uk-card-default">
+                                    <div class="uk-card-media-top">
+                                        <img src="images/Avanto-1.5T1_1024x.jpg" alt="">
+                                    </div>
+                                    <div class="uk-card-body">
+                                        <span class="uk-text-meta uk-align-left">Medical</span>
+                                        <span class="uk-align-right">
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                        </span>
+                                        <h3 class="uk-card-title">Avanto 1.5T1</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-card uk-card-default">
+                                    <div class="uk-card-media-top">
+                                        <img src="images/Avanto-1.5T1_1024x.jpg" alt="">
+                                    </div>
+                                    <div class="uk-card-body">
+                                        <span class="uk-text-meta uk-align-left">Medical</span>
+                                        <span class="uk-align-right">
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                        </span>
+                                        <h3 class="uk-card-title">Avanto 1.5T1</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-card uk-card-default">
+                                    <div class="uk-card-media-top">
+                                        <img src="images/Avanto-1.5T1_1024x.jpg" alt="">
+                                    </div>
+                                    <div class="uk-card-body">
+                                        <span class="uk-text-meta uk-align-left">Medical</span>
+                                        <span class="uk-align-right">
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                        </span>
+                                        <h3 class="uk-card-title">Avanto 1.5T1</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template x-if="tab == 'specials'">
+                    <div>
+                        <div class="uk-child-width-1-3@l uk-child-width-1-2@m" uk-grid>
+                            <div>
+                                <div class="uk-card uk-card-default">
+                                    <div class="uk-card-media-top">
+                                        <img src="images/Dental-X-Ray-PLANMECA-ProOne1_1024x.jpg" alt="">
+                                    </div>
+                                    <div class="uk-card-body">
+                                        <span class="uk-text-meta uk-align-left">Specials</span>
+                                        <span class="uk-align-right">
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                        </span>
+                                        <h3 class="uk-card-title">Avanto 1.5T1</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-card uk-card-default">
+                                    <div class="uk-card-media-top">
+                                        <img src="images/Dental-X-Ray-PLANMECA-ProOne1_1024x.jpg" alt="">
+                                    </div>
+                                    <div class="uk-card-body">
+                                        <span class="uk-text-meta uk-align-left">Medical</span>
+                                        <span class="uk-align-right">
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                        </span>
+                                        <h3 class="uk-card-title">Avanto 1.5T1</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-card uk-card-default">
+                                    <div class="uk-card-media-top">
+                                        <img src="images/Dental-X-Ray-PLANMECA-ProOne1_1024x.jpg" alt="">
+                                    </div>
+                                    <div class="uk-card-body">
+                                        <span class="uk-text-meta uk-align-left">Medical</span>
+                                        <span class="uk-align-right">
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                        </span>
+                                        <h3 class="uk-card-title">Avanto 1.5T1</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <div>
+                    <div class="uk-width-expand uk-flex-center" uk-grid>
+                        <div>
+                            <button class="uk-button uk-button-default">SEE ALL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About -->
+            <div class="uk-child-width-expand@s" uk-grid>
+                <div>
+                    <section class="uk-text-center uk-article">
+                        <h2 class="uk-article-title">ABOUT OUR STORE!</h2>
+                        <p class="uk-article-meta">Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Featured blog posts -->
+            <div class="uk-child-width-expand@s" uk-grid>
+                <div>
+                    <section class="uk-text-center uk-article">
+                        <h2 class="uk-article-title">LATEST FROM BLOG</h2>
+                        <p class="uk-article-meta">THE FRESHEST AND MOST EXCITING NEWS</p>
+
+                        <div class="uk-child-width-1-3" uk-grid>
+                            <div>
+                                <div class="uk-inline">
+
+                                    <img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/articles/med_4_1024x.jpg?v=1549907556" alt="">
+                                    <div class="uk-position-bottom uk-overlay uk-overlay-default"><h3>Blog 1</h3></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="uk-inline">
+
+                                    <img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/articles/med_5_1024x.jpg?v=1549907628" alt="">
+                                    <div class="uk-position-bottom uk-overlay uk-overlay-default"><h3>Blog 2</h3></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="uk-inline">
+
+                                    <img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/articles/med_6_1024x.jpg?v=1549907665" alt="">
+                                    <div class="uk-position-bottom uk-overlay uk-overlay-default">
+                                        <h3>Blog 3</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <!-- Social -->
+            <nav class="uk-navbar-container site-main-background uk-padding-large uk-padding-remove-vertical uk-visible@m" uk-navbar>
+
+                <div class="uk-navbar-left">
+
+                    <span class="uk-navbar-item" href="#">BE IN TOUCH WITH US:</span>
+                </div>
+
+                <div class="uk-navbar-center">
+                    <form action="javascript:void(0)">
+                        <div uk-form-custom="target: true">
+                            <input type="file">
+                            <input class="uk-input uk-form-width-large" type="text" placeholder="Enter your email address" disabled>
+                        </div>
+                        <button class="uk-button uk-button-secondary">SUBSCRIBE NOW!</button>
+                    </form>
+                </div>
+
+                <div class="uk-navbar-right">
+                    <ul class="uk-iconnav uk-text-muted">
+                        <li><a style="color: black;" href="#" uk-icon="icon: google"></a></li>
+                        <li><a style="color: black;" href="#" uk-icon="icon: twitter"></a></li>
+                        <li><a style="color: black;" href="#" uk-icon="icon: pinterest"></a></li>
+                        <li><a style="color: black;" href="#" uk-icon="icon: instagram"></a></li>
+                        <li><a style="color: black;" href="#" uk-icon="icon: facebook"></a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Footer -->
+            <section class="uk-child-width-expand@s  uk-padding-large uk-padding-remove-vertical" uk-grid>
+              <div>
+                <nav>
+                  <ul class="uk-nav uk-nav-default">
+                    <li class="uk-nav-header"><h3>COLLECTIONS</h3></li>
+                    <li>Women</li>
+                    <li>Men</li>
+                    <li>Accessories</li>
+                    <li>New Arrivals</li>
+                    <li>Best Seller</li>
+                    <li>Sale Products</li>
+                  </ul>
+                </nav>
+              </div>
+
+              <div>
+                <nav>
+                  <ul class="uk-nav uk-nav-default">
+                    <li class="uk-nav-header"><h3>BUY WITH US</h3></li>
+                    <li>About Us</li>
+                    <li>Services</li>
+                    <li>Contact Us</li>
+                    <li>FAQs</li>
+                    <li>Privacy Policy</li>
+                    <li>Cookie Policy</li>
+                    <li>Terms and Conditions</li>
+                  </ul>
+                </nav>
+              </div>
+
+              <div>
+                <article>
+                  <h3>ABOUT</h3>
+                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tempor incididunt.</p>
+                </article>
+              </div>
+              <div>
+                <article>
+                  <ul class="uk-nav uk-nav-default">
+                    <li class="uk-nav-header"><h3>CONTACT US</h3></li>
+                    <li><label>Address: </label><address style="display: inline;">7895 Piermont Dr NE Albuquerque, NM 198866, United States of America</address></li>
+                    <li><label>Phone: </label>+566 4774 9930; +566 4774 9940</li>
+                    <li><label>Email</label>: info@example.com</li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+
+            <!-- Micro Footer -->
+            <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" style="background-color: black;" uk-navbar>
+
+                <div class="uk-navbar-left">
+
+                    <span class="uk-navbar-item uk-text-large uk-text-primary" href="#">OCSCAR</span>
+                    <span class="uk-navbar-item uk-text-muted" href="#">© XofY 2020. All Rights Reserved</span>
+                </div>
+
+                <div class="uk-navbar-right">
+                    <ul class="uk-iconnav uk-text-muted">
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/Stripe_3bb936d5-88c4-416f-b494-8ae4b352127a_x21.png?v=1536748774"></a></li>
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/paypal_2_5a4a18b1-a14d-4560-be96-1338d9001532_x21.png?v=1536748807"></a></li>
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/visa_x21.png?v=1536669694"></a></li>
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/mastercard_x21.png?v=1536669707"></a></li>
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/american-express_1582d9a0-cc7e-4b26-ae9c-57906ccb811c_x21.png?v=1536748849"></a></li>
+                    </ul>
+                </div>
+            </nav>
+            
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Collection 1</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/uikit.min.css" />
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+        <style type="text/css">
+            .site-main-color {
+                color: #12AFA3 !important;
+            }
+            .site-main-background {
+                background-color: #12AFA3 !important;
+            }
+            .white-text {
+                color: white !important;
+            }
+        </style>
+    </head>
+    <body class="uk-container">
+        <header>
+            <!-- Information Bar -->
+            <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical  site-main-background" uk-navbar>
+                <!-- Contact -->
+                <div class="uk-navbar-left" style="color: white;">
+                    <span><a href="#" uk-icon="icon: mail"></a>info@example.com</span>
+                    <span><a href="#" uk-icon="icon: comment"></a>m.me/examplecom</span>
+                </div>
+                <!-- Social Media Icons -->
+                <div class="uk-navbar-right">
+                    <ul class="uk-iconnav">
+                        <li><a href="#" uk-icon="icon: google" class="white-text"></a></li>
+                        <li><a href="#" uk-icon="icon: twitter" class="white-text"></a></li>
+                        <li><a href="#" uk-icon="icon: pinterest" class="white-text"></a></li>
+                        <li><a href="#" uk-icon="icon: instagram" class="white-text"></a></li>
+                        <li><a href="#" uk-icon="icon: facebook" class="white-text"></a></li>
+                    </ul>
+                </div>
+            </nav>
+ 
+            <!-- Navbar -->
+            <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" uk-navbar>
+
+                <div class="uk-navbar-left">
+
+                    <a class="uk-navbar-item uk-logo" href="#">Oscar</a>
+
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active"><a href="#">Home</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="collections.html">Shop</a></li>
+                    </ul>
+
+                </div>
+
+                <div class="uk-navbar-right">
+                    <ul class="uk-iconnav">
+                        <li><a href="#" uk-icon="icon: search"></a></li>
+                        <li><a href="#" uk-icon="icon: user"></a></li>
+                        <li><a href="#" uk-icon="icon: settings"></a></li>
+                        <li><a href="#" uk-icon="icon: cart"></a></li>
+                    </ul>
+                </div>
+
+            </nav>
+
+            <nav class="uk-child-width-expand" uk-grid>
+                <div>
+                    <ul class="uk-breadcrumb">
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="collections.html">Collections</a></li>
+                        <li><a href="#">Collection 1</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main uk-grid>
+            <!-- Side -->
+            <aside class="uk-width-1-3@l uk-padding">
+                <nav>
+                    <!-- Collections -->
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-active"><a href="#">Collections</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">Item</a></li>
+                        <li><a href="#">Item</a></li>
+                    </ul>
+
+                    <!-- Product Type -->
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-active"><a href="#">Product Type</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">Dress</a></li>
+                        <li><a href="#">Jeans</a></li>
+                        <li><a href="#">Polo</a></li>
+                        <li><a href="#">Shirt</a></li>
+                    </ul>
+
+                    <!-- Color -->
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-active"><a href="#">Color</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">Blue</a></li>
+                        <li><a href="#">Green</a></li>
+                    </ul>
+
+                    <!-- Size -->
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-active"><a href="#">Size</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">S</a></li>
+                        <li><a href="#">M</a></li>
+                        <li><a href="#">L</a></li>
+                    </ul>
+                    
+                    <!-- Price -->
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-active"><a href="#">Price</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">$10 - $100</a></li>
+                        <li><a href="#">$300 - $400</a></li>
+                        <li><a href="#">$500 - 600</a></li>
+                    </ul>
+                    
+                    <!-- Vendor -->
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-active"><a href="#">Vendor</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">Gap</a></li>
+                        <li><a href="#">Gues</a></li>
+                    </ul>
+                    
+                    <!-- Tags -->
+                    <ul class="uk-nav uk-nav-default">
+                        <li class="uk-nav-header uk-active"><a href="#">Tags</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">Vintage</a></li>
+                        <li><a href="#">Beachwear</a></li>
+                    </ul>
+                    
+                </nav>
+            </aside>
+            <!-- Section -->
+            <section class="uk-width-2-3@l uk-padding">
+                <div uk-grid>
+                    <!-- Navigation -->
+                    <div class="uk-width-1-1 uk-padding-remove-horizontal">
+                        <div uk-grid>
+                            <!-- Collection Name -->
+                            <div class="uk-width-1-4@m">
+                                <h1 class="uk-padding uk-padding-remove-vertical">Collection 1</h1>
+                            </div>
+
+                            <!-- Sort by -->
+                            <div
+                                x-data="{
+                                    label: 'Featured',
+                                    items: [
+                                        'Featured',
+                                        'Name Ascending',
+                                        'Name Descending',
+                                        'Price Ascending',
+                                        'Price Desscending',
+                                        'Best Selling',
+                                    ],
+                                    ukOpen: false
+                                }"
+                                class="uk-width-1-4@m"
+                            >
+                                <button class="uk-button uk-button-default" type="button" x-text="label"></button>
+                                <div uk-dropdown x-ref="sortByDropdown">
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <template x-for="(item, index ) in items" :key="`${item}-${index}`">
+                                            <li><a href="#" x-text="item" @click="label = item; UIkit.dropdown($refs.sortByDropdown).hide(false)"></a></li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products -->
+                    <div class="uk-child-width-1-1 uk-padding-remove-horizontal">
+                        <div class="uk-card uk-card-default uk-margin-remove-left" uk-grid>
+                            <div class="uk-card-media-left uk-cover-container uk-width-1-4@m">
+                                <img src="images/Avanto-1.5T1_1024x.jpg" alt="" uk-cover>
+                                <canvas width="600" height="400"></canvas>
+                            </div>
+                            <div class="uk-width-3-4@m">
+                                <div class="uk-card-body uk-margin-remove" uk-grid>
+                                    <div class="uk-width-2-3@m">
+                                        <p>
+                                            <span class="uk-text-meta uk-align-left">Medical</span>
+                                            <span class="uk-align-right uk-visible@m">
+                                                <a href="" uk-icon="star"></a>
+                                                <a href="" uk-icon="star"></a>
+                                                <a href="" uk-icon="star"></a>
+                                                <a href="" uk-icon="star"></a>
+                                                <a href="" uk-icon="star"></a>
+                                            </span>
+                                        </p>
+                                        <h3 class="uk-card-title">Avanto 1.5T1</h3>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                    </div>
+                                    <div class="uk-width-1-3@m">
+                                        <p>$460.00</p>
+                                        <p>
+                                            <span uk-icon="icon: info"></span>
+                                            <span uk-icon="icon: search"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- Product -->
+                            <!-- 1 Image -->
+                            <!-- Collection Name -->
+                            <!-- Name -->
+                            <!-- Rating -->
+                            <!-- Price -->
+                            <!-- Quick View -->
+                            <!-- Add to Compare -->
+                            <!-- Description (1 col only) -->
+
+                    <!-- "Show More/No More Producs" Button -->
+                    <div>
+                        
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <!-- Social -->
+            <nav class="uk-navbar-container site-main-background uk-padding-large uk-padding-remove-vertical" uk-navbar>
+
+                <div class="uk-navbar-left">
+
+                    <span class="uk-navbar-item" href="#">BE IN TOUCH WITH US:</span>
+                </div>
+
+                <div class="uk-navbar-center">
+                    <form action="javascript:void(0)">
+                        <div uk-form-custom="target: true">
+                            <input type="file">
+                            <input class="uk-input uk-form-width-large" type="text" placeholder="Enter your email address" disabled>
+                        </div>
+                        <button class="uk-button uk-button-secondary">SUBSCRIBE NOW!</button>
+                    </form>
+                </div>
+
+                <div class="uk-navbar-right">
+                    <ul class="uk-iconnav uk-text-muted">
+                        <li><a style="color: black;" href="#" uk-icon="icon: google"></a></li>
+                        <li><a style="color: black;" href="#" uk-icon="icon: twitter"></a></li>
+                        <li><a style="color: black;" href="#" uk-icon="icon: pinterest"></a></li>
+                        <li><a style="color: black;" href="#" uk-icon="icon: instagram"></a></li>
+                        <li><a style="color: black;" href="#" uk-icon="icon: facebook"></a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Footer -->
+            <section class="uk-child-width-expand@s  uk-padding-large uk-padding-remove-vertical" uk-grid>
+              <div>
+                <nav>
+                  <ul class="uk-nav uk-nav-default">
+                    <li class="uk-nav-header"><h3>COLLECTIONS</h3></li>
+                    <li>Women</li>
+                    <li>Men</li>
+                    <li>Accessories</li>
+                    <li>New Arrivals</li>
+                    <li>Best Seller</li>
+                    <li>Sale Products</li>
+                  </ul>
+                </nav>
+              </div>
+
+              <div>
+                <nav>
+                  <ul class="uk-nav uk-nav-default">
+                    <li class="uk-nav-header"><h3>BUY WITH US</h3></li>
+                    <li>About Us</li>
+                    <li>Services</li>
+                    <li>Contact Us</li>
+                    <li>FAQs</li>
+                    <li>Privacy Policy</li>
+                    <li>Cookie Policy</li>
+                    <li>Terms and Conditions</li>
+                  </ul>
+                </nav>
+              </div>
+
+              <div>
+                <article>
+                  <h3>ABOUT</h3>
+                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tempor incididunt.</p>
+                </article>
+              </div>
+              <div>
+                <article>
+                  <ul class="uk-nav uk-nav-default">
+                    <li class="uk-nav-header"><h3>CONTACT US</h3></li>
+                    <li><label>Address: </label><address style="display: inline;">7895 Piermont Dr NE Albuquerque, NM 198866, United States of America</address></li>
+                    <li><label>Phone: </label>+566 4774 9930; +566 4774 9940</li>
+                    <li><label>Email</label>: info@example.com</li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+
+            <!-- Micro Footer -->
+            <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" style="background-color: black;" uk-navbar>
+
+                <div class="uk-navbar-left">
+
+                    <span class="uk-navbar-item uk-text-large uk-text-primary" href="#">OCSCAR</span>
+                    <span class="uk-navbar-item uk-text-muted" href="#">© XofY 2020. All Rights Reserved</span>
+                </div>
+
+                <div class="uk-navbar-right">
+                    <ul class="uk-iconnav uk-text-muted">
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/Stripe_3bb936d5-88c4-416f-b494-8ae4b352127a_x21.png?v=1536748774"></a></li>
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/paypal_2_5a4a18b1-a14d-4560-be96-1338d9001532_x21.png?v=1536748807"></a></li>
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/visa_x21.png?v=1536669694"></a></li>
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/mastercard_x21.png?v=1536669707"></a></li>
+                        <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/american-express_1582d9a0-cc7e-4b26-ae9c-57906ccb811c_x21.png?v=1536748849"></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </footer>
+    </body>
+</html>
