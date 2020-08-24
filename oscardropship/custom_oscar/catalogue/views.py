@@ -182,7 +182,7 @@ class ProductCategoryView(TemplateView):
         return category.is_public or request.user.is_staff
 
     def get_category(self):
-        return get_object_or_404(Category, pk=self.kwargs['pk'])
+        return get_object_or_404(Category, slug=self.kwargs['category_slug'])
 
     def redirect_if_necessary(self, current_path, category):
         if self.enforce_paths:

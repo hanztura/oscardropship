@@ -16,7 +16,7 @@ class CatalogueConfig(apps.CatalogueConfig):
                 name='detail'
             ),
             url(
-                r'^collections/(?P<category_slug>[\w-]+(/[\w-]+)*)_(?P<pk>\d+)/$',
+                r'^collections/(?P<category_slug>[\w-]+(/[\w-]+)*)-(?P<pk>\d+)/$',
                 self.category_view.as_view(),
                 name='category'
             ),

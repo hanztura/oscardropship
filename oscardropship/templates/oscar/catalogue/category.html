@@ -1,46 +1,189 @@
-{% extends "oscar/catalogue/browse.html" %}
+{% extends "uikit/layout_2_col.html" %}
 
 {% load i18n %}
+{% load easy_thumbnails_tags %}
 
 {% block title %}
     {{ category.name }} | {{ block.super }}
 {% endblock %}
 
-{% block description %}
-    {{ category.description|default:""|striptags }}
-{% endblock %}
-
-{% block header%}
-    <div class="page-header action">
-        {% if user.is_staff %}
-            <a class="pull-right hidden-xs" href="{% url 'dashboard:catalogue-category-update' pk=category.id %}"><small><i class="icon-edit"></i> {% trans "Edit this category" %}</small></a>
-        {% endif %}
-        <h1>{% block headertext %}{{ category.name }}{% endblock %}</h1>
-    </div>
-{% endblock %}
-
 {% block breadcrumbs %}
-    <ul class="breadcrumb">
-        <li>
-            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
-        </li>
-        {% for category in category.get_ancestors %}
-            <li>
-                <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-            </li>
-        {% endfor %}
-        <li class="active">{{ category.name }}</li>
-    </ul>
+    <nav class="uk-child-width-expand uk-padding-large uk-padding-remove-vertical" uk-grid>
+        <div>
+            <ul class="uk-breadcrumb">
+                <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+                {% for category in category.get_ancestors %}
+                    <li>
+                        <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                    </li>
+                {% endfor %}
+                <li class="active"><a href="#">{{ category.name }}</a></li>
+            </ul>
+        </div>
+    </nav>
 {% endblock breadcrumbs %}
 
+{% block side_nav %}
+    <nav>
+        <!-- Collections -->
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-nav-header uk-active"><a href="#">Collections</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="#">Item</a></li>
+            <li><a href="#">Item</a></li>
+        </ul>
+
+        <!-- Product Type -->
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-nav-header uk-active"><a href="#">Product Type</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="#">Dress</a></li>
+            <li><a href="#">Jeans</a></li>
+            <li><a href="#">Polo</a></li>
+            <li><a href="#">Shirt</a></li>
+        </ul>
+
+        <!-- Color -->
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-nav-header uk-active"><a href="#">Color</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="#">Blue</a></li>
+            <li><a href="#">Green</a></li>
+        </ul>
+
+        <!-- Size -->
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-nav-header uk-active"><a href="#">Size</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="#">S</a></li>
+            <li><a href="#">M</a></li>
+            <li><a href="#">L</a></li>
+        </ul>
+        
+        <!-- Price -->
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-nav-header uk-active"><a href="#">Price</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="#">$10 - $100</a></li>
+            <li><a href="#">$300 - $400</a></li>
+            <li><a href="#">$500 - 600</a></li>
+        </ul>
+        
+        <!-- Vendor -->
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-nav-header uk-active"><a href="#">Vendor</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="#">Gap</a></li>
+            <li><a href="#">Gues</a></li>
+        </ul>
+        
+        <!-- Tags -->
+        <ul class="uk-nav uk-nav-default">
+            <li class="uk-nav-header uk-active"><a href="#">Tags</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="#">Vintage</a></li>
+            <li><a href="#">Beachwear</a></li>
+        </ul>
+        
+    </nav>    
+{% endblock side_nav %}
+
 {% block content %}
-    {% if category.description %}
-        <div class="row">
-            <div class="col-sm-9"><p>{{ category.description|safe }}</p></div>
-            {% if category.image %}
-                <div class="col-sm-3"><img src="{{ category.image.url }}" alt="{{ category.name }}" class="img-responsive" /></div>
+    <div uk-grid>
+        <!-- Navigation -->
+        <div class="uk-width-1-1 uk-padding-remove-horizontal">
+            <div uk-grid>
+                <!-- Collection Name -->
+                <div class="uk-width-3-4@m">
+                    <h1 class="uk-padding uk-padding-remove-vertical">{{ category.name }}</h1>
+                </div>
+
+                <!-- Sort by -->
+                <div
+                    x-data="{
+                        label: 'Featured',
+                        items: [
+                            'Featured',
+                            'Name Ascending',
+                            'Name Descending',
+                            'Price Ascending',
+                            'Price Desscending',
+                            'Best Selling',
+                        ],
+                        ukOpen: false
+                    }"
+                    class="uk-width-expand"
+                >
+                    <button class="uk-button uk-button-default" type="button" x-text="label"></button>
+                    <div uk-dropdown x-ref="sortByDropdown">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <template x-for="(item, index ) in items" :key="`${item}-${index}`">
+                                <li><a href="#" x-text="item" @click="label = item; UIkit.dropdown($refs.sortByDropdown).hide(false)"></a></li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="uk-child-width-1-1 uk-padding-remove-horizontal">
+            {% if products %}
+                {% for product in products %}
+                    <div class="uk-card uk-card-default uk-margin-remove-left" uk-grid>
+                        <div class="uk-card-media-left uk-cover-container uk-width-1-4@m">
+                            {% with image=product.primary_image %}
+                                <img src="{% thumbnail image.original 600x400 %}" alt="{{ product.get_title }}" uk-cover>
+                            {% endwith %}
+                            <canvas width="600" height="400"></canvas>
+                        </div>
+                        <div class="uk-width-3-4@m">
+                            <div class="uk-card-body uk-margin-remove" uk-grid>
+                                <div class="uk-width-2-3@m">
+                                    <p>
+                                        {% with product.categories.first as category %}
+                                            
+                                        {% endwith %}
+                                        <span class="uk-text-meta uk-align-left">{{ category }}</span>
+                                        <span class="uk-align-right uk-visible@m">
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                            <a href="" uk-icon="star"></a>
+                                        </span>
+                                    </p>
+                                    <h3 class="uk-card-title">{{ product.title }}</h3>
+                                    {{ product.description|truncatewords_html:30|safe }}
+                                </div>
+                                <div class="uk-width-1-3@m">
+                                    <p>$460.00</p>
+                                    <p>
+                                        <span uk-icon="icon: info"></span>
+                                        <span uk-icon="icon: search"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                
             {% endif %}
         </div>
-    {% endif %}
-    {{ block.super }}
+            <!-- Product -->
+                <!-- 1 Image -->
+                <!-- Collection Name -->
+                <!-- Name -->
+                <!-- Rating -->
+                <!-- Price -->
+                <!-- Quick View -->
+                <!-- Add to Compare -->
+                <!-- Description (1 col only) -->
+
+        <!-- "Show More/No More Producs" Button -->
+        <div>
+            
+        </div>
+    </div>
 {% endblock %}
