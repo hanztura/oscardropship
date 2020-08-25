@@ -38,10 +38,12 @@ class ProductDetailView(DetailView):
         """
         queryset = self.model.objects.select_related(
             'parent__product_class',
+            'product_class',
         )
         queryset = queryset.prefetch_related(
             'attribute_values__attribute',
             'reviews',
+            'primary_recommendations__recommendation__images',
         )
         self.object = product = self.get_object(queryset=queryset)
 

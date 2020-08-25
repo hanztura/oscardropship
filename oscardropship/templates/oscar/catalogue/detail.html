@@ -195,6 +195,58 @@
             <a class="uk-text-default" href="#!"><span uk-icon="icon: pinterest"></span></a>
         </div>
     </div>
+
+
+    {% with recommended_products=product.sorted_recommended_products|slice:":6" %}
+        {% if recommended_products %}
+            <section class="uk-flex-center" uk-grid>
+                <div>
+                    <h2>{% trans "Related products" %}</h2>
+                    <div uk-slider="center: true">
+
+                        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+
+                            <ul class="uk-slider-items uk-child-width-1-4@s uk-grid-small">
+                                {% for product in recommended_products %}
+                                    <li>
+                                        <div class="uk-card uk-card-default">
+                                            <div class="uk-card-media-top">
+                                                {% with product.primary_image as image %}
+                                                    <img data-src="{{ image.original.url }}" alt="{{ product.primary_image.caption }}" uk-img="width: 265; height:329">
+                                                {% endwith %}
+                                            </div>
+                                            <div class="uk-card-body uk-padding-small uk-padding-remove-vertical">
+                                                <h3 class="uk-card-title"><small>{{ product.title }}</small></h3>
+                                                {% purchase_info_for_product request product as session %}
+                                                {% if session.price.exists %}
+                                                    {% if session.price.excl_tax == 0 %}
+                                                        <p class="price_color">{% trans "Free" %}</p>
+                                                    {% elif session.price.is_tax_known %}
+                                                        <p class="price_color">{{ session.price.incl_tax|currency:session.price.currency }}</p>
+                                                    {% else %}
+                                                        <p class="price_color">{{ session.price.excl_tax|currency:session.price.currency }}</p>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <p class="price_color">&nbsp;</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
+                        </div>
+
+                        <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    {% endwith %}
 {% endblock content_wrapper %}
 
 {% block extrascripts %}
