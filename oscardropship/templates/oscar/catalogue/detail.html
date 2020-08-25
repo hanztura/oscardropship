@@ -8,6 +8,7 @@
 {% load i18n %}
 {% load purchase_info_tags %}
 {% load static %}
+{% load easy_thumbnails_tags %}
 
 {% block title %}
     {{ product.get_title }} | {{ block.super }}
@@ -38,38 +39,44 @@
 {% block content_wrapper %}
     <section class="uk-child-width-1-2@m" uk-grid>
         {# Product Images #}
-        <div>
-            <div
-                x-data="slideshow()"
-                style="z-index: 980"
-                uk-sticky="bottom: #additonalInformation; top: 100"
-                uk-grid>
-                {# thumbnav #}
-                <div class="uk-width-1-4@s uk-visible@l">
-                    <ul class="uk-thumbnav uk-thumbnav-vertical" uk-margin>
-                        <li :class="{ 'uk-active': index == 0 }"><a @click="changeIndex(0)"><img src="{% static "wokiee-theme/images/Avanto-1.5T1_1024x.jpg" %}" width="100" alt=""></a></li>
-                        <li :class="{ 'uk-active': index == 1 }"><a @click="changeIndex(1)"><img src="{% static "wokiee-theme/images/Dental-X-Ray-PLANMECA-ProOne1_1024x.jpg" %}" width="100" alt=""></a></li>
-                    </ul>
-                </div>
-
-                {# image display #}
-                <div class="uk-width-expand">
-                    <div x-ref="itemSlideshow" class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="ratio: false">
-                        <ul class="uk-slideshow-items" uk-height-viewport="min-height: 300">
-                            <li>
-                                <img src="{% static "wokiee-theme/images/Avanto-1.5T1_1024x.jpg" %}" alt="" uk-cover>
-                            </li>
-                            <li>
-                                <img src="{% static "wokiee-theme/images/Dental-X-Ray-PLANMECA-ProOne1_1024x.jpg" %}" alt="" uk-cover>
-                            </li>
+        {% with product.get_all_images as all_images %}
+            <div>
+                <div
+                    x-data="slideshow()"
+                    style="z-index: 980"
+                    uk-sticky="bottom: #additonalInformation; top: 100"
+                    uk-grid>
+                    {# thumbnav #}
+                    <div class="uk-width-1-4@s uk-visible@l">
+                        <ul class="uk-thumbnav uk-thumbnav-vertical" uk-margin>
+                            {% for image in all_images %}
+                                {% with counter=forloop.counter|add:'-1' %}
+                                    <li :class="{ 'uk-active': index == {{ counter }} }"><a @mouseenter="changeIndex({{ counter }})"><img src="{% thumbnail image.original 100x124 %}" width="100" alt=""></a></li>
+                                    
+                                {% endwith %}
+                            {% endfor %}
                         </ul>
+                    </div>
 
-                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                    {# image display #}
+                    <div class="uk-width-expand">
+                        <div x-ref="itemSlideshow" class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="min-height: 500;">
+                            <ul class="uk-slideshow-items">
+                                {% for image in all_images %}
+                                    <li>
+                                        <img src="{{ image.original.url }}" alt="" uk-cover>
+                                    </li>
+                                {% endfor %}
+                                <li>
+                            </ul>
+
+                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endwith %}
 
         {# Details #}
         <div>
