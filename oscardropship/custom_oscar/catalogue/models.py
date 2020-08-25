@@ -1,7 +1,11 @@
-from .abstract_models import AbstractCategory
+from .abstract_models import AbstractCategory, AbstractProduct
 
 
 class Category(AbstractCategory):
+    pass
+
+
+class Product(AbstractProduct):
     pass
 
 

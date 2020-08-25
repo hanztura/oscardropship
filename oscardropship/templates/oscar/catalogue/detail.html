@@ -39,35 +39,36 @@
 {% block content_wrapper %}
     <section class="uk-child-width-1-2@m" uk-grid>
         {# Product Images #}
-        {% with product.get_all_images as all_images %}
+        {% with all_images=product.get_all_images %}
             <div>
                 <div
                     x-data="slideshow()"
                     style="z-index: 980"
                     uk-sticky="bottom: #additonalInformation; top: 100"
+                    class="uk-flex uk-flex-center"
                     uk-grid>
                     {# thumbnav #}
-                    <div class="uk-width-1-4@s uk-visible@l">
+                    <div class="uk-width-1-6@s uk-visible@l">
                         <ul class="uk-thumbnav uk-thumbnav-vertical" uk-margin>
                             {% for image in all_images %}
                                 {% with counter=forloop.counter|add:'-1' %}
-                                    <li :class="{ 'uk-active': index == {{ counter }} }"><a @mouseenter="changeIndex({{ counter }})"><img src="{% thumbnail image.original 100x124 %}" width="100" alt=""></a></li>
-                                    
+                                    <li :class="{ 'uk-active': index == {{ counter }} }"><a @mouseenter="changeIndex({{ counter }})"><img src="{% thumbnail image.original 100x124 %}" width="50" alt=""></a></li>
                                 {% endwith %}
                             {% endfor %}
                         </ul>
                     </div>
 
                     {# image display #}
-                    <div class="uk-width-expand">
+                    <div class="uk-width-expand" id="zoomImages">
                         <div x-ref="itemSlideshow" class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="min-height: 500;">
                             <ul class="uk-slideshow-items">
                                 {% for image in all_images %}
-                                    <li>
-                                        <img src="{{ image.original.url }}" alt="" uk-cover>
-                                    </li>
+                                        <li>
+                                            <div uk-lightbox>
+                                                <a href="{{ image.original.url }}" data-alt="{{ image.caption }}" data-caption="{{ image.caption }}"><img data-src="{{ image.original.url }}" alt="{{ image.caption }}" uk-cover uk-img="target: !.uk-slideshow-items"></a>
+                                            </div>
+                                        </li>
                                 {% endfor %}
-                                <li>
                             </ul>
 
                             <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
@@ -204,7 +205,10 @@
                 changeIndex(index) {
                     this.index = index;
                     UIkit.slideshow(this.$refs.itemSlideshow).show(this.index);
-                }
+                },
+                changeImage(url, container) {
+                    this.$refs.productImage.setAttribute('data-src', url)
+                },
             }
         }
 

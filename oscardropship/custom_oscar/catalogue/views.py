@@ -38,10 +38,11 @@ class ProductDetailView(DetailView):
         """
         queryset = self.model.objects.select_related(
             'parent__product_class',
-            'product_class')
+        )
         queryset = queryset.prefetch_related(
             'attribute_values__attribute',
-            'reviews',)
+            'reviews',
+        )
         self.object = product = self.get_object(queryset=queryset)
 
         redirect = self.redirect_if_necessary(request.path, product)

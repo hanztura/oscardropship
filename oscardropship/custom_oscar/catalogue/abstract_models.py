@@ -1,5 +1,6 @@
 from oscar.apps.catalogue.abstract_models import (
     AbstractCategory as BaseAbstractCategory,
+    AbstractProduct as BaseAbstractProduct,
     _,
     reverse)
 
@@ -26,3 +27,18 @@ class AbstractCategory(BaseAbstractCategory):
         return reverse('catalogue:category', kwargs={
             'category_slug': self.slug, 'pk': self.pk
         })
+
+
+class AbstractProduct(BaseAbstractProduct):
+
+    class Meta:
+        abstract = True
+        app_label = 'catalogue'
+        ordering = ['-date_created']
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
+
+    def get_all_images(self):
+        if self.is_child and not self.images.exists() and self.parent_id is not None:
+            return self.parent.images.all()
+        return self.images.all()
