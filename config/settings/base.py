@@ -70,11 +70,15 @@ INSTALLED_APPS = [
     'oscar.apps.shipping.apps.ShippingConfig',
 
     # 'oscar.apps.catalogue.apps.CatalogueConfig',
+    # 'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscardropship.custom_oscar.catalogue.apps.CatalogueConfig',
+    'oscardropship.custom_oscar.catalogue.reviews.apps.CatalogueReviewsConfig',
 
-    'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
-    'oscar.apps.partner.apps.PartnerConfig',
+
+    # 'oscar.apps.partner.apps.PartnerConfig',
+    'oscardropship.custom_oscar.partner.apps.PartnerConfig',
+
     'oscar.apps.basket.apps.BasketConfig',
     'oscar.apps.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',

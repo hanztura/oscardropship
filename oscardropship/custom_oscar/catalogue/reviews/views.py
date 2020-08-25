@@ -1,0 +1,1 @@
+from oscar.apps.catalogue.reviews.views import *

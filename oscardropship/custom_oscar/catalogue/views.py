@@ -36,7 +36,13 @@ class ProductDetailView(DetailView):
         """
         Ensures that the correct URL is used before rendering a response
         """
-        self.object = product = self.get_object()
+        queryset = self.model.objects.select_related(
+            'parent__product_class',
+            'product_class')
+        queryset = queryset.prefetch_related(
+            'attribute_values__attribute',
+            'reviews',)
+        self.object = product = self.get_object(queryset=queryset)
 
         redirect = self.redirect_if_necessary(request.path, product)
         if redirect is not None:
@@ -182,7 +188,8 @@ class ProductCategoryView(TemplateView):
         return category.is_public or request.user.is_staff
 
     def get_category(self):
-        return get_object_or_404(Category, slug=self.kwargs['category_slug'])
+        category = get_object_or_404(Category, pk=self.kwargs['pk'])
+        return category
 
     def redirect_if_necessary(self, current_path, category):
         if self.enforce_paths:
