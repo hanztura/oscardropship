@@ -41,6 +41,8 @@
         <div>
             <div
                 x-data="slideshow()"
+                style="z-index: 980"
+                uk-sticky="bottom: #additonalInformation; top: 100"
                 uk-grid>
                 {# thumbnav #}
                 <div class="uk-width-1-4@s uk-visible@l">
@@ -144,7 +146,7 @@
 
             {# additonal information #}
             <hr>
-            <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-child-width-expand" uk-grid id="additonalInformation">
                 <div>
                     <h2>ADDITIONAL INFORMATION</h2>
                     <table class="uk-table">
@@ -178,7 +180,7 @@
         </div>
     </section>
 
-    <div class="uk-flex-center" uk-grid>
+    <div class="uk-flex-center" uk-grid id="socialMediaLinks">
         <div>
             <a class="uk-text-default" href="#!"><span uk-icon="icon: facebook"></span></a>
             <a class="uk-text-default" href="#!"><span uk-icon="icon: instagram"></span></a>
