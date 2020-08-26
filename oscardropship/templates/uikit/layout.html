@@ -38,7 +38,10 @@
     </header>
 
     {# Main content of page - other layout templates may override this block #}
-    <main class="uk-container uk-padding-small uk-padding-remove-horizontal">{% block content_wrapper %}{% endblock %}</main>
+    <main class="uk-container uk-padding-small uk-padding-remove-horizontal">
+        {% include "uikit/partials/alert_messages.html" %}
+        {% block content_wrapper %}{% endblock %}
+    </main>
 
     <footer class="uk-container uk-padding-remove-horizontal">{% include "uikit/partials/footer.html" %}</footer>
 {% endblock %}
@@ -58,6 +61,7 @@
     <script src="{% static "oscar/js/bootstrap3/bootstrap.min.js" %}"></script>
     <!-- Oscar -->
     <script src="{% static "oscar/js/oscar/ui.js" %}"></script>
+
 {% endblock %}
 
 {% block extrascripts %}

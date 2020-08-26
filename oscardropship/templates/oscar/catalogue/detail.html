@@ -43,6 +43,7 @@
             <div>
                 <div
                     x-data="slideshow()"
+                    @variant-selected.window="changeImage($event.detail)"
                     style="z-index: 980"
                     uk-sticky="bottom: #additonalInformation; top: 100"
                     class="uk-flex uk-flex-center"
@@ -52,7 +53,7 @@
                         <ul class="uk-thumbnav uk-thumbnav-vertical" uk-margin>
                             {% for image in all_images %}
                                 {% with counter=forloop.counter|add:'-1' %}
-                                    <li :class="{ 'uk-active': index == {{ counter }} }"><a @mouseenter="changeIndex({{ counter }})"><img src="{% thumbnail image.original 100x124 %}" width="50" alt=""></a></li>
+                                    <li :class="{ 'uk-active': index == {{ counter }} }"><a @mouseenter="changeImage('{{ image.original.url }}'); changeIndex({{ counter }})"><img data-src="{% thumbnail image.original 100x124 %}" width="50" alt="" uk-img></a></li>
                                 {% endwith %}
                             {% endfor %}
                         </ul>
@@ -60,19 +61,8 @@
 
                     {# image display #}
                     <div class="uk-width-expand" id="zoomImages">
-                        <div x-ref="itemSlideshow" class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="min-height: 500;">
-                            <ul class="uk-slideshow-items">
-                                {% for image in all_images %}
-                                        <li>
-                                            <div uk-lightbox>
-                                                <a href="{{ image.original.url }}" data-alt="{{ image.caption }}" data-caption="{{ image.caption }}"><img data-src="{{ image.original.url }}" alt="{{ image.caption }}" uk-cover uk-img="target: !.uk-slideshow-items"></a>
-                                            </div>
-                                        </li>
-                                {% endfor %}
-                            </ul>
-
-                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                        <div>
+                            <img x-ref="productImage" data-src="{{ product.primary_image.original.url }}" width="" height="" alt="" uk-img>
                         </div>
                     </div>
                 </div>
@@ -80,7 +70,7 @@
         {% endwith %}
 
         {# Details #}
-        <div>
+        <div x-data="buyForm()">
             {% purchase_info_for_product request product as session %}
 
             <p class="{{ session.availability.code }} availability">
@@ -107,6 +97,28 @@
                 {% include "uikit/catalogue/reviews/partials/review_stars.html" %}
             {% endiffeature %}
 
+            {# Variants #}
+            <div class="uk-child-width-1-1 uk-flex uk-flex-between" uk-grid>
+                <div>
+                    <h2>{% trans 'Variants:' %}</h2>
+                </div>
+                <div>
+                    {% block variants %}
+                        {% for child in product.children.public %}
+                            {% with counter=forloop.counter|add:'-1' %}
+                                {% purchase_info_for_product request child as child_session %}
+                                {% if child_session.availability.is_available_to_buy %}
+                                    <a
+                                        @click="variantSelected($event, '{% url 'basket:add' pk=child.pk  %}', $dispatch, {{ counter }})"
+                                        :class="{'uk-text-muted': currentVariant != {{ counter }} }"
+                                        href="#!" data-image-src="{{ child.primary_image.original.url }}">{{ child.get_title }}</a><br>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    {% endblock %}
+                </div>
+            </div>
+
             <div class="uk-child-width-auto uk-flex uk-flex-between" uk-grid>
                 <div>
                     <span>
@@ -123,7 +135,8 @@
             </div>
 
             {# quantity and buy now #}
-            <div class="uk-flex uk-flex-between" x-data="buyForm()" uk-grid>
+
+            <div class="uk-flex uk-flex-between" uk-grid>
                 <div class="uk-width-1-1">
                     <div class="uk-form-controls uk-form-controls-text">
                         <label><input x-model="isAgree" class="uk-checkbox" type="checkbox" name="is_agree"> I agree with the terms and conditions</label><br>
@@ -136,12 +149,20 @@
                         <input
                             x-model.number="quantity"
                             class="uk-input uk-width-1-1 uk-text-center"
-                            type="number"
-                            name="quantity">
+                            type="number">
                     </div>
                 </div>
                 <div class="uk-width-expand">
-                    <button class="uk-button uk-button-primary uk-width-1-1">BUY NOW</button>
+                    <form
+                         x-bind:action="productURL"
+                        id="add_to_basket_form"
+                        method="post"
+                        class="add-to-basket">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{% url 'checkout:index' %}">
+                        <input type="hidden" name="quantity" x-model.number="quantity">
+                        <button class="uk-button uk-button-primary uk-width-1-1" type="submit" form="add_to_basket_form">BUY NOW</button>
+                    </form>
                 </div>
             </div>
 
@@ -212,11 +233,11 @@
                                         <div class="uk-card uk-card-default">
                                             <div class="uk-card-media-top">
                                                 {% with product.primary_image as image %}
-                                                    <img data-src="{{ image.original.url }}" alt="{{ product.primary_image.caption }}" uk-img="width: 265; height:329">
+                                                <a href="{{ product.get_absolute_url }}"><img data-src="{{ image.original.url }}" alt="{{ product.primary_image.caption }}" uk-img="width: 265; height:329"></a>
                                                 {% endwith %}
                                             </div>
                                             <div class="uk-card-body uk-padding-small uk-padding-remove-vertical">
-                                                <h3 class="uk-card-title"><small>{{ product.title }}</small></h3>
+                                                <h3 class="uk-card-title"><a style="color: black !important;" href="{{ product.get_absolute_url }}"><small>{{ product.get_title }}</small></a></h3>
                                                 {% purchase_info_for_product request product as session %}
                                                 {% if session.price.exists %}
                                                     {% if session.price.excl_tax == 0 %}
@@ -256,9 +277,9 @@
                 index: 0,
                 changeIndex(index) {
                     this.index = index;
-                    UIkit.slideshow(this.$refs.itemSlideshow).show(this.index);
+                    // UIkit.slideshow(this.$refs.itemSlideshow).show(this.index);
                 },
-                changeImage(url, container) {
+                changeImage(url) {
                     this.$refs.productImage.setAttribute('data-src', url)
                 },
             }
@@ -267,9 +288,19 @@
         function buyForm() {
             return {
                 quantity: 1,
+                productURL: '',
                 isAgree: false,
+                currentVariant: -1,
                 updateQuantity(num) {
                     this.quantity += num;
+                },
+                variantSelected(e, url, dispatch, counter) {
+                    this.productURL = url;
+
+                    let imageURL = e.target.getAttribute('data-image-src');
+                    dispatch('variant-selected', imageURL);
+
+                    this.currentVariant = counter;
                 }
             }
         }

@@ -1,0 +1,18 @@
+{% comment %}
+Use message tags to control these alerts.  Available tags include:
+- safe: allow HTML in the message
+- block: for longer messages - this adds extra padding
+- noicon: don't show an icon
+- error/success/info - these change the connotation of the alert
+{% endcomment %}
+
+<div class="uk-child-width-1-1" uk-grid>
+	<div>
+		{% for message in messages %}
+			<div class="uk-alert-primary" uk-alert>
+			    <a class="uk-alert-close" uk-close></a>
+			    <p>{{ message }}</p>
+			</div>
+		{% endfor %}
+	</div>
+</div>
