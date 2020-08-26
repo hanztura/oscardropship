@@ -5,8 +5,9 @@ from django.urls import reverse
 
 from oscar.apps.checkout import views
 from oscar.apps.payment import forms, models
-
 from paypal.payflow import facade
+
+from custom_oscar.payment.forms import PaypalOrderModelForm
 
 
 class PaymentDetailsView(views.PaymentDetailsView):
@@ -17,6 +18,7 @@ class PaymentDetailsView(views.PaymentDetailsView):
     """
     template_name = 'uikit/checkout/payment_details.html'
     template_name_preview = 'uikit/checkout/preview.html'
+    preview = True
 
     def get_context_data(self, **kwargs):
         """
@@ -40,37 +42,23 @@ class PaymentDetailsView(views.PaymentDetailsView):
         if request.POST.get('action', '') == 'place_order':
             return self.do_place_order(request)
 
-        bankcard_form = forms.BankcardForm(request.POST)
-        billing_address_form = forms.BillingAddressForm(request.POST)
-        if not all([bankcard_form.is_valid(),
-                    billing_address_form.is_valid()]):
-            # Form validation failed, render page again with errors
-            self.preview = False
-            ctx = self.get_context_data(
-                bankcard_form=bankcard_form,
-                billing_address_form=billing_address_form)
-            return self.render_to_response(ctx)
-
         # Render preview with bankcard and billing address details hidden
-        return self.render_preview(request,
-                                   bankcard_form=bankcard_form,
-                                   billing_address_form=billing_address_form)
+        return self.render_preview(request)
 
     def do_place_order(self, request):
         # Helper method to check that the hidden forms wasn't tinkered
         # with.
-        bankcard_form = forms.BankcardForm(request.POST)
-        billing_address_form = forms.BillingAddressForm(request.POST)
-        if not all([bankcard_form.is_valid(),
-                    billing_address_form.is_valid()]):
+        paypal_order_form = PaypalOrderModelForm(request.POST)
+        if not paypal_order_form.is_valid():
             messages.error(request, "Invalid submission")
             return HttpResponseRedirect(reverse('checkout:payment-details'))
+        else:
+            paypal_order_form.save()
 
         # Attempt to submit the order, passing the bankcard object so that it
         # gets passed back to the 'handle_payment' method below.
         submission = self.build_submission()
-        submission['payment_kwargs']['bankcard'] = bankcard_form.bankcard
-        submission['payment_kwargs']['billing_address'] = billing_address_form.cleaned_data
+        submission['payment_kwargs']['paypal_order'] = paypal_order_form.cleaned_data
         return self.submit(**submission)
 
     def handle_payment(self, order_number, total, **kwargs):
@@ -80,9 +68,9 @@ class PaymentDetailsView(views.PaymentDetailsView):
         # Using authorization here (two-stage model).  You could use sale to
         # perform the auth and capture in one step.  The choice is dependent
         # on your business model.
-        facade.authorize(
-            order_number, total.incl_tax,
-            kwargs['bankcard'], kwargs['billing_address'])
+        # facade.authorize(
+        #     order_number, total.incl_tax,
+        #     kwargs['bankcard'], kwargs['billing_address'])
 
         # Record payment source and event
         source_type, is_created = models.SourceType.objects.get_or_create(

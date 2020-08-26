@@ -14,26 +14,67 @@
 {% endblock %}
 
 {% block place_order %}
-    <form method="post" action="{% url 'checkout:preview' %}" id="place_order_form">
-        {% csrf_token %}
-        <input type="hidden" name="action" value="place_order" />
+    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}"></script>
+    <div x-data="setupPaypal()">
+        <form method="post" action="{% url 'checkout:preview' %}" id="place_order_form">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="place_order" />
+            <input type="hidden" value="{{ order_total.incl_tax }}" id="orderTotal">
+            <input type="hidden" name="details" id="paypalDetails">
+            <input type="hidden" name="order_id" id="orderId">
+            {% comment %}
+                When submitting sensitive data on the payment details page (eg a bankcard)
+                we don't want to save the data and so we pass the bound form to the preview
+                template and render it in a hidden div.  Then the payment information will
+                get re-submitted when the user confirms the order.
+            {% endcomment %}
+            <div style="display:none">
+                {% block hiddenforms %}{% endblock %}
+            </div>
 
-        {% comment %}
-            When submitting sensitive data on the payment details page (eg a bankcard)
-            we don't want to save the data and so we pass the bound form to the preview
-            template and render it in a hidden div.  Then the payment information will
-            get re-submitted when the user confirms the order.
-        {% endcomment %}
-        <div style="display:none">
-            {% block hiddenforms %}{% endblock %}
-        </div>
 
-        <div class="form-group clearfix">
-            <div class="row">
-                <div class="col-sm-3 col-sm-offset-9">
-                     <button id='place-order' type="submit" class="btn btn-primary btn-lg btn-block" data-loading-text="{% trans 'Submitting...' %}">{% trans "Place order" %}</button>
+            <div class="form-group clearfix">
+                <div class="row">
+                    <div class="col-sm-3 col-sm-offset-9">
+        
+                    </div>
                 </div>
             </div>
+        </form>
+        <div id="paypal-button-container"></div>
         </div>
-    </form>
+    <script>
+        function setupPaypal() {
+          return {
+            details: {},
+          }
+        }
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+              // This function sets up the details of the transaction, including the amount and line item details.
+              return actions.order.create({
+                purchase_units: [{
+                  amount: {
+                    value: document.getElementById('orderTotal').value
+                  },
+                }],
+                application_context: {
+                  brand_name: 'Django Oscar',
+                  user_action: "PAY_NOW"
+                  
+                }
+              });
+            },
+            onApprove: function(data, actions) {
+              // This function captures the funds from the transaction.
+              return actions.order.capture().then(function(details) {
+                // This function shows a transaction success message to your buyer.
+                alert('Transaction completed by ' + details.payer.name.given_name);
+                document.getElementById('paypalDetails').value = JSON.stringify(details);
+                document.getElementById('orderId').value = details.id;
+                document.getElementById('place_order_form').submit()
+              });
+            }
+        }).render('#paypal-button-container');
+    </script>
 {% endblock place_order %}

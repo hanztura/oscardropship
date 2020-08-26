@@ -662,7 +662,7 @@
                                 {% for note in notes %}
                                     <tr>
                                         <td>{{ note.date_created }}</td>
-                                        <td>{{ note.user|default:"-" }}</td>
+                                        <td>{{ note.x_user|default:"-" }}</td>
                                         <td>{{ note.note_type|default:"-" }}</td>
                                         <td>{{ note.message|linebreaks }}</td>
                                         <td>

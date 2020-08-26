@@ -18,8 +18,22 @@
                     purchase_units: [{
                       amount: {
                         value: '0.01'
-                      }
-                    }]
+                      },
+                    }],
+                    application_context: {
+                      brand_name: 'Django Oscar',
+                      user_action: "PAY_NOW"
+                      
+                    }
+                  });
+                },
+                onApprove: function(data, actions) {
+                  // This function captures the funds from the transaction.
+                  return actions.order.capture().then(function(details) {
+                    // This function shows a transaction success message to your buyer.
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                    console.log(details);
+                    console.log(data)
                   });
                 }
             }).render('#paypal-button-container');

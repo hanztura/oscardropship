@@ -1,0 +1,9 @@
+{% load wagtailimages_tags %}
+
+{% image value.background_image original as image %}
+<div class="uk-height-viewport uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-dark uk-text-right" style="background-image: url({{ image.url }})">
+		<div>
+    	<{{ value.title_tag }}>{{ value.title }}</{{ value.title_tag }}>
+    	<p><a class="uk-button uk-button-primary" href="{{ value.cta_href }}">{{ value.cta_text }}</a></p>
+		</div>
+</div>

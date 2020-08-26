@@ -67,27 +67,23 @@ INSTALLED_APPS = [
 
     'custom_oscar.config.CustomShop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
-
     # 'oscar.apps.checkout.apps.CheckoutConfig',
     'oscardropship.custom_oscar.checkout.apps.CheckoutConfig',
-
     'oscar.apps.address.apps.AddressConfig',
     'oscar.apps.shipping.apps.ShippingConfig',
-
     # 'oscar.apps.catalogue.apps.CatalogueConfig',
     # 'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscardropship.custom_oscar.catalogue.apps.CatalogueConfig',
     'oscardropship.custom_oscar.catalogue.reviews.apps.CatalogueReviewsConfig',
-
     'oscar.apps.communication.apps.CommunicationConfig',
-
     # 'oscar.apps.partner.apps.PartnerConfig',
-    'oscardropship.custom_oscar.partner.apps.PartnerConfig',
-
+    'custom_oscar.partner.apps.PartnerConfig',
     'oscar.apps.basket.apps.BasketConfig',
-    'oscar.apps.payment.apps.PaymentConfig',
+    # 'oscar.apps.payment.apps.PaymentConfig',
+    'oscardropship.custom_oscar.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',
-    'oscar.apps.order.apps.OrderConfig',
+    # 'oscar.apps.order.apps.OrderConfig',
+    'custom_oscar.order.apps.OrderConfig',
     'oscar.apps.customer.apps.CustomerConfig',
     'oscar.apps.search.apps.SearchConfig',
     'oscar.apps.voucher.apps.VoucherConfig',
@@ -112,8 +108,6 @@ INSTALLED_APPS = [
     'treebeard',
     'sorl.thumbnail',
     'django_tables2',
-    'paypal',
-    'paypal.express.dashboard.apps.ExpressDashboardApplication',
     'oscar_accounts.apps.AccountsConfig',
     'oscar_accounts.dashboard.apps.AccountsDashboardConfig',
 
@@ -285,20 +279,31 @@ OSCAR_ORDER_STATUS_PIPELINE = {
         'Received',
         'Cancelled',
     ),
+    'Received': (),
     'Cancelled': (),
 }
-OSCAR_DASHBOARD_NAVIGATION.append(
-    {
-        'label': _('PayPal'),
-        'icon': 'icon-globe',
-        'children': [
-            {
-                'label': _('Express transactions'),
-                'url_name': 'paypal-express-list',
-            },
-        ]
-    }
-)
+OSCAR_ORDER_STATUS_CASCADE = {
+    'Being processed': 'Being processed',
+    'Shipped': 'Shipped',
+    'Received': 'Received',
+    'Cancelled': 'Cancelled',
+}
+OSCAR_LINE_STATUS_PIPELINE = {
+    'Pending': (
+        'Being processed',
+        'Cancelled',
+    ),
+    'Being processed': (
+        'Shipped',
+        'Cancelled',
+    ),
+    'Shipped': (
+        'Received',
+        'Cancelled',
+    ),
+    'Received': (),
+    'Cancelled': (),
+}
 OSCAR_ALLOW_ANON_CHECKOUT = True
 OSCAR_FROM_EMAIL = os.environ.setdefault("OSCAR_FROM_EMAIL", "oscar@example.com")
 OSCAR_DEFAULT_CURRENCY = "USD"
@@ -306,12 +311,8 @@ OSCAR_USE_LESS = False
 OSCAR_HOMEPAGE = reverse_lazy('wagtail_serve', args=[''])
 
 # paypal
-PAYPAL_SANDBOX_MODE = True
-PAYPAL_CALLBACK_HTTPS = False
-PAYPAL_API_VERSION = '119'
-PAYPAL_API_USERNAME = os.environ.setdefault('PAYPAL_API_USERNAME', '')
-PAYPAL_API_PASSWORD = os.environ.setdefault('PAYPAL_API_PASSWORD', '')
-PAYPAL_API_SIGNATURE = os.environ.setdefault('PAYPAL_API_SIGNATURE', '')
+PAYPAL_SANDBOX_MODE = False
+PAYPAL_CALLBACK_HTTPS = True
 PAYPAL_API_ACCOUNT = os.environ.setdefault('PAYPAL_API_ACCOUNT', '')
 PAYPAL_API_CLIENT_ID = os.environ.setdefault('PAYPAL_API_CLIENT_ID', '')
 PAYPAL_API_SECRET = os.environ.setdefault('PAYPAL_API_SECRET', '')
