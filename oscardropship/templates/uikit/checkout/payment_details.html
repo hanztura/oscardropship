@@ -1,0 +1,33 @@
+{% extends 'oscar/checkout/payment_details.html' %}
+{% load i18n %}
+
+{% block payment_details %}
+      <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}"></script>
+    <div class="well">
+        <div class="sub-header">
+            <h3>{% trans "PayPal Express" %}</h3>
+        </div>
+        <p>{% trans "Click on the below icon to use Express Checkout but where the shipping address and method is already chosen on the merchant site." %}</p>
+        <div id="paypal-button-container"></div>
+
+        <script>
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                  // This function sets up the details of the transaction, including the amount and line item details.
+                  return actions.order.create({
+                    purchase_units: [{
+                      amount: {
+                        value: '0.01'
+                      }
+                    }]
+                  });
+                }
+            }).render('#paypal-button-container');
+        </script>
+    </div>
+
+    <form action="">
+        <input type="hidden" name="action" value="place_order">
+    </form>
+
+{% endblock %}

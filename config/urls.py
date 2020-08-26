@@ -18,11 +18,20 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
+from paypal.express.dashboard.apps import ExpressDashboardApplication
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 
+
 urlpatterns = [
     path(settings.DJANGO_ADMIN_URL, admin.site.urls),
+
+    path('shop/checkout/paypal/', include('paypal.express.urls')),
+    # Dashboard views for Express
+    path('shop/dashboard/paypal/express/', apps.get_app_config("express_dashboard").urls),
+
+    path('shop/dashboard/accounts/', apps.get_app_config('accounts_dashboard').urls),
+
     path('shop/', include(apps.get_app_config('oscar').urls[0])),
 
     path('cms/', include(wagtailadmin_urls)),

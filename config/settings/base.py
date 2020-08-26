@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import secrets
 
+from django.utils.translation import ugettext_lazy as _
+
 from oscar.defaults import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -65,7 +67,10 @@ INSTALLED_APPS = [
 
     'custom_oscar.config.CustomShop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
-    'oscar.apps.checkout.apps.CheckoutConfig',
+
+    # 'oscar.apps.checkout.apps.CheckoutConfig',
+    'oscardropship.custom_oscar.checkout.apps.CheckoutConfig',
+
     'oscar.apps.address.apps.AddressConfig',
     'oscar.apps.shipping.apps.ShippingConfig',
 
@@ -107,6 +112,10 @@ INSTALLED_APPS = [
     'treebeard',
     'sorl.thumbnail',
     'django_tables2',
+    'paypal',
+    'paypal.express.dashboard.apps.ExpressDashboardApplication',
+    'oscar_accounts.apps.AccountsConfig',
+    'oscar_accounts.dashboard.apps.AccountsDashboardConfig',
 
     # must haves
     'django_extensions',
@@ -278,11 +287,61 @@ OSCAR_ORDER_STATUS_PIPELINE = {
     ),
     'Cancelled': (),
 }
+OSCAR_DASHBOARD_NAVIGATION.append(
+    {
+        'label': _('PayPal'),
+        'icon': 'icon-globe',
+        'children': [
+            {
+                'label': _('Express transactions'),
+                'url_name': 'paypal-express-list',
+            },
+        ]
+    }
+)
 OSCAR_ALLOW_ANON_CHECKOUT = True
 OSCAR_FROM_EMAIL = os.environ.setdefault("OSCAR_FROM_EMAIL", "oscar@example.com")
 OSCAR_DEFAULT_CURRENCY = "USD"
 OSCAR_USE_LESS = False
 OSCAR_HOMEPAGE = reverse_lazy('wagtail_serve', args=[''])
+
+# paypal
+PAYPAL_SANDBOX_MODE = True
+PAYPAL_CALLBACK_HTTPS = False
+PAYPAL_API_VERSION = '119'
+PAYPAL_API_USERNAME = os.environ.setdefault('PAYPAL_API_USERNAME', '')
+PAYPAL_API_PASSWORD = os.environ.setdefault('PAYPAL_API_PASSWORD', '')
+PAYPAL_API_SIGNATURE = os.environ.setdefault('PAYPAL_API_SIGNATURE', '')
+PAYPAL_API_ACCOUNT = os.environ.setdefault('PAYPAL_API_ACCOUNT', '')
+PAYPAL_API_CLIENT_ID = os.environ.setdefault('PAYPAL_API_CLIENT_ID', '')
+PAYPAL_API_SECRET = os.environ.setdefault('PAYPAL_API_SECRET', '')
+PAYPAL_CURRENCY = PAYPAL_PAYFLOW_CURRENCY = 'USD'
+PAYPAL_PAYFLOW_DASHBOARD_FORMS = True
+
+# oscar-accounts
+OSCAR_DASHBOARD_NAVIGATION.append(
+    {
+        'label': 'Accounts',
+        'icon': 'icon-globe',
+        'children': [
+            {
+                'label': 'Accounts',
+                'url_name': 'accounts_dashboard:accounts-list',
+            },
+            {
+                'label': 'Transfers',
+                'url_name': 'accounts_dashboard:transfers-list',
+            },
+            {
+                'label': 'Deferred income report',
+                'url_name': 'accounts_dashboard:report-deferred-income',
+            },
+            {
+                'label': 'Profit/loss report',
+                'url_name': 'accounts_dashboard:report-profit-loss',
+            },
+        ]
+    })
 
 # wagtail
 WAGTAIL_SITE_NAME = 'My Example Site'
