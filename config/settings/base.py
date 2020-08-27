@@ -138,6 +138,9 @@ INSTALLED_APPS = [
     'puput',
     'colorful',
 
+    # other third parties
+    'newsletter',
+
     # project
     'wagtail_pages',
 ]
@@ -356,3 +359,6 @@ WAGTAIL_SITE_NAME = 'My Example Site'
 
 # puput
 PUPUT_AS_PLUGIN = True
+
+# django-newesletter
+NEWSLETTER_CONFIRM_EMAIL = False

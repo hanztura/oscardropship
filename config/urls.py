@@ -26,6 +26,7 @@ from wagtail.core import urls as wagtail_urls
 urlpatterns = [
     path(settings.DJANGO_ADMIN_URL, admin.site.urls),
 
+    path('newsletter/', include('newsletter.urls')),
 
     path('shop/dashboard/accounts/', apps.get_app_config('accounts_dashboard').urls),
 
