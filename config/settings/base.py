@@ -142,9 +142,11 @@ INSTALLED_APPS = [
     # other third parties
     'tinymce',
     'newsletter',
+    'colorfield',
 
     # project
     'wagtail_pages',
+    'multisite',
 ]
 
 MIDDLEWARE = [
@@ -263,6 +265,8 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+GOOGLE_ANALYTICS_PROPERTY_ID = os.environ.setdefault('GOOGLE_ANALYTICS_PROPERTY_ID', '')
 
 ENVIRONMENT_FLOAT = True
 ENVIRONMENT_NAME = "Production server"
