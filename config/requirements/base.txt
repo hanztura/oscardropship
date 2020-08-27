@@ -4,6 +4,7 @@ django-oscar-accounts==2.1
 django-oscar==2.1
 django-oscar-paypal==2.0.0
 easy-thumbnails==2.7
+puput==1.1.1
 paypal-checkout-serversdk==1.0.1
 psycopg2==2.8.4
 pycountry==20.7.3

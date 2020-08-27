@@ -18,6 +18,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 
+from puput import urls as puput_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 
@@ -25,11 +26,14 @@ from wagtail.core import urls as wagtail_urls
 urlpatterns = [
     path(settings.DJANGO_ADMIN_URL, admin.site.urls),
 
+
     path('shop/dashboard/accounts/', apps.get_app_config('accounts_dashboard').urls),
 
     path('shop/', include(apps.get_app_config('oscar').urls[0])),
 
     path(settings.WAGTAIL_CMS_URL, include(wagtailadmin_urls)),
+
+    path('', include(puput_urls)),
     path('', include(wagtail_urls)),
 ]
 

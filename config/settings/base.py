@@ -127,9 +127,16 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
+    'wagtail.contrib.sitemaps',
+    'wagtail.contrib.routable_page',
 
     'modelcluster',
     'taggit',
+
+    # puput
+    'django_social_share',
+    'puput',
+    'colorful',
 
     # project
     'wagtail_pages',
@@ -346,3 +353,6 @@ OSCAR_DASHBOARD_NAVIGATION.append(
 
 # wagtail
 WAGTAIL_SITE_NAME = 'My Example Site'
+
+# puput
+PUPUT_AS_PLUGIN = True

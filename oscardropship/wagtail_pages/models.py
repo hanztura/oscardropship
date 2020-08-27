@@ -3,9 +3,9 @@ from django.db import models
 from modelcluster.fields import ParentalKey
 from oscar.core.loading import get_model
 from wagtail.admin.edit_handlers import (
-    FieldPanel, InlinePanel, StreamFieldPanel
+    FieldPanel, InlinePanel, StreamFieldPanel, 
 )
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page, Orderable
 
 from .blocks import BannerBlock
@@ -23,9 +23,11 @@ class HomePage(Page):
         blank=True,
         null=True,
     )
+    about = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('banner', classname='full'),
+        FieldPanel('about', classname='full'),
         InlinePanel(
             'category_items',
             label='Category Items',
