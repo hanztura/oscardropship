@@ -106,7 +106,6 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'haystack',
     'treebeard',
-    'sorl.thumbnail',
     'django_tables2',
     'oscar_accounts.apps.AccountsConfig',
     'oscar_accounts.dashboard.apps.AccountsDashboardConfig',
@@ -114,6 +113,7 @@ INSTALLED_APPS = [
     # must haves
     'django_extensions',
     'easy_thumbnails',
+    'sorl.thumbnail',
 
     # wagtail
     'wagtail.contrib.forms',
@@ -139,6 +139,7 @@ INSTALLED_APPS = [
     'colorful',
 
     # other third parties
+    'tinymce',
     'newsletter',
 
     # project
@@ -362,3 +363,12 @@ PUPUT_AS_PLUGIN = True
 
 # django-newesletter
 NEWSLETTER_CONFIRM_EMAIL = False
+NEWSLETTER_RICHTEXT_WIDGET = "tinymce.widgets.TinyMCE"
+# Amount of seconds to wait between each email. Here 100ms is used.
+NEWSLETTER_EMAIL_DELAY = 0.1
+
+# Amount of seconds to wait between each batch. Here one minute is used.
+NEWSLETTER_BATCH_DELAY = 60
+
+# Number of emails in one batch
+NEWSLETTER_BATCH_SIZE = 100
