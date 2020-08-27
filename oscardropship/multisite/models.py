@@ -24,6 +24,16 @@ class SeoSettings(BaseSetting):
 
 
 @register_setting
+class NewsletterSetting(BaseSetting):
+    default_newsletter = models.ForeignKey(
+        'newsletter.Newsletter',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True
+    )
+
+
+@register_setting
 class SiteBranding(BaseSetting):
     """RE the SiteBranding model, you'll note that there's no
     custom-validation on the

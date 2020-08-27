@@ -7,22 +7,22 @@
     </div>
 
     <div class="uk-navbar-center">
-        <form action="javascript:void(0)">
-            <div uk-form-custom="target: true">
-                <input type="file">
-                <input class="uk-input uk-form-width-large" type="text" placeholder="Enter your email address" disabled>
-            </div>
-            <button class="uk-button uk-button-secondary">SUBSCRIBE NOW!</button>
+        <form  enctype="multipart/form-data" action="{{ settings.multisite.NewsletterSetting.default_newsletter.subscribe_url }}" method="post">
+          {% csrf_token %}
+          <div uk-form-custom="target: true">
+              <input class="uk-input uk-form-width-large" type="email" placeholder="Enter your email address" name="email_field" required>
+          </div>
+          <button class="uk-button uk-button-secondary">SUBSCRIBE NOW!</button>
         </form>
     </div>
 
     <div class="uk-navbar-right">
         <ul class="uk-iconnav uk-text-muted">
-            <li><a style="color: black;" href="#" uk-icon="icon: google"></a></li>
-            <li><a style="color: black;" href="#" uk-icon="icon: twitter"></a></li>
-            <li><a style="color: black;" href="#" uk-icon="icon: pinterest"></a></li>
-            <li><a style="color: black;" href="#" uk-icon="icon: instagram"></a></li>
-            <li><a style="color: black;" href="#" uk-icon="icon: facebook"></a></li>
+          <li><a style="color: black;" href="#" uk-icon="icon: google"></a></li>
+          <li><a style="color: black;" href="#" uk-icon="icon: twitter"></a></li>
+          <li><a style="color: black;" href="#" uk-icon="icon: pinterest"></a></li>
+          <li><a style="color: black;" href="#" uk-icon="icon: instagram"></a></li>
+          <li><a style="color: black;" href="#" uk-icon="icon: facebook"></a></li>
         </ul>
     </div>
 </nav>

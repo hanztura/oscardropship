@@ -183,7 +183,9 @@ TEMPLATES = [
                 'oscar.apps.search.context_processors.search_form',
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.communication.notifications.context_processors.notifications',
-                'oscar.core.context_processors.metadata'
+                'oscar.core.context_processors.metadata',
+
+                'wagtail.contrib.settings.context_processors.settings',
             ],
         },
     },
