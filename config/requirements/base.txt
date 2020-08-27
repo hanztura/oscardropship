@@ -11,4 +11,5 @@ paypal-checkout-serversdk==1.0.1
 psycopg2==2.8.4
 pycountry==20.7.3
 sorl-thumbnail==12.6.3
+stringcase==1.2.0
 wagtail==2.10

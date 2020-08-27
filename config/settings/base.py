@@ -129,6 +129,7 @@ INSTALLED_APPS = [
     'wagtail.core',
     'wagtail.contrib.sitemaps',
     'wagtail.contrib.routable_page',
+    'wagtail.contrib.settings',
 
     'modelcluster',
     'taggit',
