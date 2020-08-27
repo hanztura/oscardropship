@@ -32,14 +32,17 @@
     </div>
 
     <!-- Featured Items -->
-    <div x-data="{ tab: 'new-arivals' }" class="uk-child-width-1-1@s" uk-grid>
+    <div
+        x-data="{ tab: 'new-arivals', showSeeAll: true, }"
+        x-init="$watch('tab', function(value) { showSeeAll = (value in ['new-arivals', 'specials']) ? true : false ; })"
+        class="uk-child-width-1-1@s" uk-grid>
         <div>
             <ul class="uk-flex-center" uk-tab>
-                <li x-on:click="tab = 'new-arivals'"><a href="#">NEW ARRIVALS</a></li>
-                <li x-on:click="tab = 'specials'"><a href="#">SPECIALS</a></li>
-                <li x-on:click="tab = 'bestsellers'"><a href="#">BESTSELLERS</a></li>
-                <li x-on:click="tab = 'most-viewed'"><a href="#">MOST VIEWED</a></li>
-                <li x-on:click="tab = 'featured-products'"><a href="#">FEATURED PRODUCTS</a></li>
+                <li><a @click="tab = 'new-arivals'; showSeeAll = true" href="#new-arivals">NEW ARRIVALS</a></li>
+                <li><a @click="tab = 'specials'; showSeeAll = true" href="#specials">SPECIALS</a></li>
+                <li><a @click="tab = 'bestsellers'; showSeeAll = false" href="#bestsellers">BESTSELLERS</a></li>
+                <li><a @click="tab = 'most-viewed'; showSeeAll = false" href="#most-viewed">MOST VIEWED</a></li>
+                <li><a @click="tab = 'featured-products'; showSeeAll = false" href="#featured-products">FEATURED PRODUCTS</a></li>
             </ul>
         </div>
 
@@ -75,13 +78,78 @@
             </div>
         </template>
 
-        <div>
-            <div class="uk-width-expand uk-flex-center" uk-grid>
-                <div>
-                    <a class="uk-button uk-button-default" href="{% url 'catalogue:index' %}">SEE ALL</a>
+        {# most viewed products #}
+        <template x-if="tab == 'most-viewed'">
+            <div>
+                <div
+                    uk-slider
+                    uk-height-match="target: > div > ul > li > div > .uk-card-media-top">
+                    <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
+                        <ul class="uk-slider-items uk-child-width-1-4@l uk-child-width-1-2@s uk-grid uk-grid-match uk-grid-small">
+                            {% for most_viewed_product in most_viewed_products %}
+                                <li>
+                                    {% include "uikit/wagtail/partials/product_small.html" with product=most_viewed_product.product %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
+
+        {# best selling products #}
+        <template x-if="tab == 'bestsellers'">
+            <div>
+                <div
+                    uk-slider
+                    uk-height-match="target: > div > ul > li > div > .uk-card-media-top">
+                    <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
+                        <ul class="uk-slider-items uk-child-width-1-4@l uk-child-width-1-2@s uk-grid uk-grid-match uk-grid-small">
+                            {% for best_selling_product in best_selling_products %}
+                                <li>
+                                    {% include "uikit/wagtail/partials/product_small.html" with product=best_selling_product.product %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        {# featured products #}
+        <template x-if="tab == 'featured-products'">
+            <div>
+                <div
+                    uk-slider
+                    uk-height-match="target: > div > ul > li > div > .uk-card-media-top">
+                    <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
+                        <ul class="uk-slider-items uk-child-width-1-4@l uk-child-width-1-2@s uk-grid uk-grid-match uk-grid-small">
+                            {% for featured_product in page.featured_products.all %}
+                                <li>
+                                    {% include "uikit/wagtail/partials/product_small.html" with product=featured_product.product %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template x-if="showSeeAll">
+            <div>
+                <div class="uk-width-expand uk-flex-center" uk-grid>
+                    <div>
+                        <a class="uk-button uk-button-default" href="{% url 'catalogue:index' %}">SEE ALL</a>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 
     <!-- About -->
@@ -130,5 +198,5 @@
                 </div>
             </section>
         </div>
-    </div>    
+    </div> 
 {% endblock content_wrapper %}
