@@ -5,6 +5,7 @@
 {% load i18n %}
 {% load product_tags %}
 {% load wagtailcore_tags %}
+{% load easy_thumbnails_tags %}
 
 {% block title %}
     {% if summary %}{{ summary }} |{% endif %} {{ block.super }}
@@ -169,32 +170,20 @@
                 <h2 class="uk-article-title">LATEST FROM BLOG</h2>
                 <p class="uk-article-meta">THE FRESHEST AND MOST EXCITING NEWS</p>
 
-                <div class="uk-child-width-1-3" uk-grid>
-                    <div>
-                        <div class="uk-inline">
+                <div class="uk-child-width-1-3 uk-grid-match" uk-grid>
+                    {% for blog_post in latest_blog_posts %}
+                    {% with blog_post as post %}
+                        <div>
+                            <div class="uk-inline">
 
-                            <img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/articles/med_4_1024x.jpg?v=1549907556" alt="">
-                            <div class="uk-position-bottom uk-overlay uk-overlay-default"><h3>Blog 1</h3></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="uk-inline">
-
-                            <img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/articles/med_5_1024x.jpg?v=1549907628" alt="">
-                            <div class="uk-position-bottom uk-overlay uk-overlay-default"><h3>Blog 2</h3></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="uk-inline">
-
-                            <img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/articles/med_6_1024x.jpg?v=1549907665" alt="">
-                            <div class="uk-position-bottom uk-overlay uk-overlay-default">
-                                <h3>Blog 3</h3>
+                                <a href="{{ post.url }}"><img data-src="{% thumbnail post.header_image.file 500x353 %}" alt="" uk-img></a>
+                                <div class="uk-position-bottom uk-overlay uk-overlay-default">
+                                    <h3><a href="{{ post.url }}" class="uk-link-heading">{{ post.title }}</a></h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endwith %}
+                    {% endfor %}
                 </div>
             </section>
         </div>

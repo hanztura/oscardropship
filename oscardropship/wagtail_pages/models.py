@@ -2,6 +2,7 @@ from django.db import models
 
 from modelcluster.fields import ParentalKey
 from oscar.core.loading import get_model
+from puput.models import BlogPage
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, StreamFieldPanel, 
 )
@@ -62,6 +63,11 @@ class HomePage(Page):
         queryset = queryset.prefetch_related('images')[:6]
         return queryset
 
+    def get_latest_blog_posts(self):
+        blog = BlogPage.objects.first()
+        queryset = blog.get_entries().select_related('header_image')[:3]
+        return queryset
+
     def get_context(self, request):
         context = super().get_context(request)
 
@@ -69,6 +75,7 @@ class HomePage(Page):
         context['new_arrivals'] = self.get_newly_arrived_products()
         context['most_viewed_products'] = self.get_most_viewed_products()
         context['best_selling_products'] = self.get_best_selling_products()
+        context['latest_blog_posts'] = self.get_latest_blog_posts()
         return context
 
 
@@ -111,6 +118,21 @@ class HomePageFeaturedProduct(Orderable, models.Model):
         Product,
         on_delete=models.CASCADE,
         related_name='home_page_featured')
+
+    panels = [
+        FieldPanel('product')
+    ]
+
+
+class HomePageBlogPost(Orderable, models.Model):
+    page = ParentalKey(
+        'wagtail_pages.HomePage',
+        on_delete=models.CASCADE,
+        related_name='blog_posts')
+    blog_post = models.ForeignKey(
+        BlogPage,
+        on_delete=models.CASCADE,
+        related_name='home_page_posts')
 
     panels = [
         FieldPanel('product')
