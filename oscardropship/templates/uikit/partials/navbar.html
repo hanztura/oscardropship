@@ -1,8 +1,8 @@
-<nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" uk-navbar>
+<nav class="uk-navbar-container uk-padding-small" uk-navbar>
 
     <div class="uk-navbar-left">
 
-        <a class="uk-navbar-item uk-logo" href="{{ homepage_url }}">{% block brand_title %}{{ shop_name }}{% endblock %}</a>
+        <a class="uk-navbar-item uk-logo uk-text-primary uk-text-lowercase" href="{{ homepage_url }}"><strong>{% block brand_title %}{{ organisation_settings.name }}{% endblock %}</strong></a>
 
         <ul class="uk-navbar-nav">
             <li class="uk-active"><a href="{{ homepage_url }}">Home</a></li>

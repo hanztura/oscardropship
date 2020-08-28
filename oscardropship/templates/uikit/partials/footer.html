@@ -1,9 +1,9 @@
 <!-- Social -->
-<nav class="uk-navbar-container site-main-background uk-padding-large uk-padding-remove-vertical uk-visible@m" uk-navbar>
+<nav class="uk-navbar-container uk-navbar-transparent uk-background-primary uk-padding-small uk-padding-remove-vertical uk-visible@m" uk-navbar>
 
     <div class="uk-navbar-left">
 
-        <span class="uk-navbar-item" href="#">BE IN TOUCH WITH US:</span>
+        <span class="uk-navbar-item">BE IN TOUCH WITH US:</span>
     </div>
 
     <div class="uk-navbar-center">
@@ -25,7 +25,7 @@
 
 {% with settings.multisite.FooterSettings as footer_settings %}
   <!-- Main Footer -->
-  <section class="uk-child-width-expand@s  uk-padding-large uk-padding-remove-vertical" uk-grid>
+  <section class="uk-child-width-expand@s  uk-padding-small uk-padding-remove-vertical" uk-grid>
     <div>
       <nav>
         <ul class="uk-nav uk-nav-default">
@@ -73,11 +73,11 @@
   </section>
 
 <!-- Micro Footer -->
-<nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" style="background-color: black;" uk-navbar>
+<nav class="uk-navbar-container uk-padding-small uk-padding-remove-vertical" style="background-color: black;" uk-navbar>
 
     <div class="uk-navbar-left">
 
-        <span class="uk-navbar-item uk-text-large uk-text-primary" href="#">{{ organisation_settings.name }}</span>
+        <span class="uk-navbar-item uk-text-large uk-text-primary uk-text-lowercase" href="#"><strong>{{ organisation_settings.name }}</strong></span>
         <span class="uk-navbar-item uk-text-muted" href="#">© {{ organisation_settings.name }} {% now 'Y' %}. All Rights Reserved</span>
     </div>
 
