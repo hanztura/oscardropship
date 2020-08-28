@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load wagtailcore_tags %}
 
 <nav id="top_page" class="uk-navbar-container accounts" uk-navbar>
     {# This is used in mobile view #}
@@ -24,26 +25,31 @@
                 {% endblock %}
         <ul class="uk-navbar-nav uk-visible@l">
             {% if user.is_authenticated %}
-            {% block nav_account_navbar_authenticated %}
-                <li>
-                    {% if num_unread_notifications > 0 %}
-                        {# If user has new notifications - we change account link to go to inbox #}
-                        <a href="{% url 'customer:notifications-inbox' %}">
-                            <i class="icon-user"></i>
-                            {% trans "Account" %}
-                            <span class="label label-warning">{{ num_unread_notifications }}</span>
-                        </a>
-                    {% else %}
-                        <a href="{% url 'customer:summary' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
+                {% block nav_account_navbar_authenticated %}
+                    <li>
+                        {% if num_unread_notifications > 0 %}
+                            {# If user has new notifications - we change account link to go to inbox #}
+                            <a href="{% url 'customer:notifications-inbox' %}">
+                                <i class="uk-padding-small uk-padding-remove-vertical" uk-icon="icon: user"></i>
+                                {% trans "Account" %}
+                                <span class="label label-warning">{{ num_unread_notifications }}</span>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'customer:summary' %}"><i class="uk-padding-small uk-padding-remove-vertical" uk-icon="icon: user"></i> {% trans "Account" %}</a>
+                        {% endif %}
+                    </li>
+                    {% if user.is_staff or perms.partner.dashboard_access %}
+                        <li><a href="{% url 'dashboard:index' %}"><i class="uk-padding-small uk-padding-remove-vertical" uk-icon="icon: home"></i> {% trans "Dashboard" %}</a></li>
                     {% endif %}
-                </li>
-                {% if user.is_staff or perms.partner.dashboard_access %}
-                    <li><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i> {% trans "Dashboard" %}</a></li>
-                {% endif %}
-                <li><a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i> {% trans "Logout" %}</a></li>
-                    {% endblock %}
+
+                    {% if user.is_staff and page %}
+                        <li><a href="{% url 'wagtailadmin_pages:edit' page.pk %}"><i class="uk-padding-small uk-padding-remove-vertical" uk-icon="icon: pencil"></i> {% trans "Edit this page" %}</a></li>
+                    {% endif %}
+
+                    <li><a id="logout_link" href="{% url 'customer:logout' %}"><i class="uk-padding-small uk-padding-remove-vertical" uk-icon="icon: sign-out"></i> {% trans "Logout" %}</a></li>
+                {% endblock %}
             {% else %}
-                <li><a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i> {% trans "Login or register" %}</a></li>
+                <li><a id="login_link" href="{% url 'customer:login' %}"><i class="uk-padding-small uk-padding-remove-vertical" uk-icon="icon: sign-in"></i> {% trans "Login or register" %}</a></li>
             {% endif %}
         </ul>
 

@@ -2,10 +2,44 @@ from django.conf import settings
 from django.db import models
 
 from colorfield.fields import ColorField
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 from wagtail.admin.edit_handlers import (
-    FieldPanel, MultiFieldPanel)
+    FieldPanel,
+    InlinePanel,
+    MultiFieldPanel,
+)
 from wagtail.contrib.settings.models import BaseSetting, register_setting
+from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
+
+from .abstracts import RelatedLink
+
+
+@register_setting
+class FooterSettings(BaseSetting, ClusterableModel):
+    """The FooterLinks model takes advantage of the RelatedLink model we
+    implemented above.
+    """
+    about = models.TextField(blank=True)
+
+    panels = [
+        FieldPanel('about'),
+        InlinePanel('footer_links', label="Footer Links"),
+    ]
+
+    @property
+    def category_links(self):
+        return self.footer_links.filter(
+            link_category__isnull=False).select_related('link_category')
+
+    @property
+    def non_category_links(self):
+        return self.footer_links.filter(link_category__isnull=True)
+
+
+class FooterLinksRelatedLink(Orderable, RelatedLink):
+    page = ParentalKey('FooterSettings', related_name='footer_links')
 
 
 @register_setting

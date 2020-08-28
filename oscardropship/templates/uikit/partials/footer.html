@@ -27,54 +27,49 @@
     </div>
 </nav>
 
-<!-- Main Footer -->
-<section class="uk-child-width-expand@s  uk-padding-large uk-padding-remove-vertical" uk-grid>
-  <div>
-    <nav>
-      <ul class="uk-nav uk-nav-default">
-        <li class="uk-nav-header"><h3>COLLECTIONS</h3></li>
-        <li>Women</li>
-        <li>Men</li>
-        <li>Accessories</li>
-        <li>New Arrivals</li>
-        <li>Best Seller</li>
-        <li>Sale Products</li>
-      </ul>
-    </nav>
-  </div>
+{% with settings.multisite.FooterSettings as footer_settings %}
+  <!-- Main Footer -->
+  <section class="uk-child-width-expand@s  uk-padding-large uk-padding-remove-vertical" uk-grid>
+    <div>
+      <nav>
+        <ul class="uk-nav uk-nav-default">
+          <li class="uk-nav-header"><h3>COLLECTIONS</h3></li>
+          {% for link in footer_settings.category_links %}
+            <li><a class="uk-link-reset" href="{{ link.link }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
 
-  <div>
-    <nav>
-      <ul class="uk-nav uk-nav-default">
-        <li class="uk-nav-header"><h3>BUY WITH US</h3></li>
-        <li>About Us</li>
-        <li>Services</li>
-        <li>Contact Us</li>
-        <li>FAQs</li>
-        <li>Privacy Policy</li>
-        <li>Cookie Policy</li>
-        <li>Terms and Conditions</li>
-      </ul>
-    </nav>
-  </div>
+    <div>
+      <nav>
+        <ul class="uk-nav uk-nav-default">
+          <li class="uk-nav-header"><h3>BUY WITH US</h3></li>
+          {% for link in footer_settings.non_category_links %}
+            <li><a class="uk-link-reset" href="{{ link.link }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
 
-  <div>
-    <article>
-      <h3>ABOUT</h3>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tempor incididunt.</p>
-    </article>
-  </div>
-  <div>
-    <article>
-      <ul class="uk-nav uk-nav-default">
-        <li class="uk-nav-header"><h3>CONTACT US</h3></li>
-        <li><label>Address: </label><address style="display: inline;">7895 Piermont Dr NE Albuquerque, NM 198866, United States of America</address></li>
-        <li><label>Phone: </label>+566 4774 9930; +566 4774 9940</li>
-        <li><label>Email</label>: info@example.com</li>
-      </ul>
-    </article>
-  </div>
-</section>
+    <div>
+      <article>
+        <h3>ABOUT</h3>
+        <p>{{ footer_settings.about }}</p>
+      </article>
+    </div>
+    <div>
+      <article>
+        <ul class="uk-nav uk-nav-default">
+          <li class="uk-nav-header"><h3>CONTACT US</h3></li>
+          <li><label>Address: </label><address style="display: inline;">7895 Piermont Dr NE Albuquerque, NM 198866, United States of America</address></li>
+          <li><label>Phone: </label>+566 4774 9930; +566 4774 9940</li>
+          <li><label>Email</label>: info@example.com</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+{% endwith %}
 
 <!-- Micro Footer -->
 <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" style="background-color: black;" uk-navbar>
