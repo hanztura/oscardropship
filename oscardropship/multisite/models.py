@@ -13,7 +13,7 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
 
-from .abstracts import RelatedLink, SocialMediaAbstractModel
+from .abstracts import RelatedLink, SocialMediaAbstractModel, AuthorityItem
 from wagtail_pages.schemas import Organization, PostalAddress
 
 
@@ -81,6 +81,7 @@ class FooterSettings(BaseSetting, ClusterableModel):
     panels = [
         FieldPanel('about'),
         InlinePanel('footer_links', label="Footer Links"),
+        InlinePanel('footer_authority_items', label="Authority Items"),
     ]
 
     @property
@@ -95,6 +96,10 @@ class FooterSettings(BaseSetting, ClusterableModel):
 
 class FooterLinksRelatedLink(Orderable, RelatedLink):
     page = ParentalKey('FooterSettings', related_name='footer_links')
+
+
+class FooterLinksAuthorityItem(Orderable, AuthorityItem):
+    page = ParentalKey('FooterSettings', related_name='footer_authority_items')
 
 
 @register_setting

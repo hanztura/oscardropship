@@ -55,6 +55,32 @@ class RelatedLink(LinkFields):
         abstract = True
 
 
+class AuthorityItem(models.Model):
+    name = models.CharField(max_length=50, blank=True)
+    link = models.URLField(blank=True)
+    image_link = models.URLField(blank=True)
+    height = models.CharField(max_length=10, blank=True)
+    width = models.CharField(max_length=10, blank=True)
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('link'),
+        FieldPanel('image_link'),
+        FieldPanel('height'),
+        FieldPanel('width'),
+    ]
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def image(self):
+        return self.image_link
+
+
 class SocialMediaAbstractModel(models.Model):
     twitter_handle = models.CharField(max_length=50, blank=True)
     facebook_username = models.CharField(max_length=50, blank=True)

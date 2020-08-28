@@ -66,33 +66,31 @@
             <li><label>Address</label>: <address style="display: inline;">{{ organisation_settings.simple_address }}</address></li>
           {% endif %}
           {% if organisation_settings.phone_number %}
-            <li><label>Phone</label>: <a href="tel:{{ organisation_settings.phone_number }}">{{ organisation_settings.phone_number }}</a></li>
+            <li><a class="uk-link-reset" href="tel:{{ organisation_settings.phone_number }}"><label>Phone</label>: {{ organisation_settings.phone_number }}</a></li>
           {% endif %}
           {% if organisation_settings.email %}
-            <li><label>Email</label>: <a href="mailto:{{ organisation_settings.email }}">{{ organisation_settings.email }}</a></li>
+            <li><a class="uk-link-reset" href="mailto:{{ organisation_settings.email }}"><label>Email</label>: {{ organisation_settings.email }}</a></li>
           {% endif %}
         </ul>
       </article>
     </div>
   </section>
-{% endwith %}
 
 <!-- Micro Footer -->
 <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical" style="background-color: black;" uk-navbar>
 
     <div class="uk-navbar-left">
 
-        <span class="uk-navbar-item uk-text-large uk-text-primary" href="#">{{ shop_name }}</span>
-        <span class="uk-navbar-item uk-text-muted" href="#">© XofY 2020. All Rights Reserved</span>
+        <span class="uk-navbar-item uk-text-large uk-text-primary" href="#">{{ organisation_settings.name }}</span>
+        <span class="uk-navbar-item uk-text-muted" href="#">© {{ organisation_settings.name }} {% now 'Y' %}. All Rights Reserved</span>
     </div>
 
     <div class="uk-navbar-right">
         <ul class="uk-iconnav uk-text-muted">
-            <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/Stripe_3bb936d5-88c4-416f-b494-8ae4b352127a_x21.png?v=1536748774"></a></li>
-            <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/paypal_2_5a4a18b1-a14d-4560-be96-1338d9001532_x21.png?v=1536748807"></a></li>
-            <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/visa_x21.png?v=1536669694"></a></li>
-            <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/mastercard_x21.png?v=1536669707"></a></li>
-            <li><a href="#"><img src="https://cdn.shopify.com/s/files/1/0042/3673/8649/files/american-express_1582d9a0-cc7e-4b26-ae9c-57906ccb811c_x21.png?v=1536748849"></a></li>
+          {% for authority in footer_settings.footer_authority_items.all %}
+            <li><a href="#"><img {% if authority.height  %}style="height: {{ authority.height}}"{% endif %} data-src="{{ authority.image_link }}" alt="{{ authority.name }}" uk-img></a></li>
+          {% endfor %}
         </ul>
     </div>
 </nav>
+{% endwith %}
