@@ -1,17 +1,13 @@
 <nav class="uk-navbar-container uk-padding-large uk-padding-remove-vertical  site-main-background" uk-navbar>
     <!-- Contact -->
     <div class="uk-navbar-left">
-        <span><a href="#" uk-icon="icon: mail"></a>info@example.com</span>
-        <span><a href="#" uk-icon="icon: comment"></a>m.me/examplecom</span>
+        <a class="uk-padding-small uk-padding-remove-vertical uk-link-reset" href="mailto:{{ organisation_settings.email }}"><span uk-icon="icon: mail"></span> {{ organisation_settings.email }}</a>
+        <a class="uk-padding-small uk-padding-remove-vertical uk-link-reset" href="{{ organisation_settings.messenger_url }}" target="_blank"><span uk-icon="icon: comment"></span> Messenger</a>
     </div>
     <!-- Social Media Icons -->
     <div class="uk-navbar-right">
-        <ul class="uk-iconnav">
-            <li><a href="#" uk-icon="icon: google" class="white-text"></a></li>
-            <li><a href="#" uk-icon="icon: twitter" class="white-text"></a></li>
-            <li><a href="#" uk-icon="icon: pinterest" class="white-text"></a></li>
-            <li><a href="#" uk-icon="icon: instagram" class="white-text"></a></li>
-            <li><a href="#" uk-icon="icon: facebook" class="white-text"></a></li>
-        </ul>
+      <ul class="uk-iconnav uk-link-reset">
+        {% include "uikit/partials/social_media_links.html" %}
+      </ul>
     </div>
 </nav>

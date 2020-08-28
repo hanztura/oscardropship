@@ -17,20 +17,9 @@
     </div>
 
     <div class="uk-navbar-right">
-        <ul class="uk-iconnav uk-text-muted">
-          {% if organisation_settings.instagram_url %}
-            <li><a style="color: black;" href="{{ organisation_settings.instagram_url }}" uk-icon="icon: instagram" target="_blank"></a></li>
-          {% endif %}
-          {% if organisation_settings.pinterest_url %}
-            <li><a style="color: black;" href="{{ organisation_settings.pinterest_url }}" uk-icon="icon: pinterest" target="_blank"></a></li>
-          {% endif %}
-          {% if organisation_settings.twitter_url %}
-            <li><a style="color: black;" href="{{ organisation_settings.twitter_url }}" uk-icon="icon: twitter" target="_blank"></a></li>
-          {% endif %}
-          {% if organisation_settings.facebook_url %}
-            <li><a style="color: black;" href="{{ organisation_settings.facebook_url }}" uk-icon="icon: facebook" target="_blank"></a></li>
-          {% endif %}
-        </ul>
+      <ul class="uk-iconnav uk-text-muted">
+        {% include "uikit/partials/social_media_links.html" %}
+      </ul>
     </div>
 </nav>
 
