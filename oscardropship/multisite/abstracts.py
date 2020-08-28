@@ -85,6 +85,8 @@ class SocialMediaAbstractModel(models.Model):
     twitter_handle = models.CharField(max_length=50, blank=True)
     facebook_username = models.CharField(max_length=50, blank=True)
     linkedin_url = models.URLField(blank=True)
+    pinterest_url = models.URLField(blank=True)
+    instagram_url = models.URLField(blank=True)
 
     class Meta:
         abstract = True
