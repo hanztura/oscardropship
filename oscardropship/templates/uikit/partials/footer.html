@@ -82,9 +82,9 @@
     </div>
 
     <div class="uk-navbar-right">
-        <ul class="uk-iconnav uk-text-muted">
+        <ul class="uk-iconnav uk-text-muted" uk-tooltip="Your security is our priority. 🔒">
           {% for authority in footer_settings.footer_authority_items.all %}
-            <li><a href="#"><img {% if authority.height  %}style="height: {{ authority.height}}"{% endif %} data-src="{{ authority.image_link }}" alt="{{ authority.name }}" uk-img></a></li>
+            <li><img {% if authority.height  %}style="height: {{ authority.height}}"{% endif %} data-src="{{ authority.image_link }}" alt="{{ authority.name }}" uk-img></li>
           {% endfor %}
         </ul>
     </div>
