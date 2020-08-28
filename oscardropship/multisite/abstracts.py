@@ -53,3 +53,33 @@ class RelatedLink(LinkFields):
 
     class Meta:
         abstract = True
+
+
+class SocialMediaAbstractModel(models.Model):
+    twitter_handle = models.CharField(max_length=50, blank=True)
+    facebook_username = models.CharField(max_length=50, blank=True)
+    linkedin_url = models.URLField(blank=True)
+
+    class Meta:
+        abstract = True
+
+    @property
+    def twitter_url(self):
+        if self.twitter_handle:
+            return 'https://twitter.com/' + self.twitter_handle
+        else:
+            return ''
+
+    @property
+    def facebook_url(self):
+        if self.facebook_username:
+            return 'https://facebook.com/' + self.facebook_username
+        else:
+            return ''
+
+    @property
+    def messenger_url(self):
+        if self.facebook_username:
+            return 'https://m.me/' + self.facebook_username
+        else:
+            return ''

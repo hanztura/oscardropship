@@ -1,59 +1,62 @@
 {% load i18n %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="{% block html_class %}no-js{% endblock %}">
-    <head>
-        <title>{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
 
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <meta name="created" content="{% now "jS M Y h:i" %}" />
-        <meta name="description" content="{% block description %}{% endblock %}" />
-        <meta name="viewport" content="{% block viewport %}width=device-width, initial-scale=1{% endblock %}" />
-        <meta name="robots" content="NOARCHIVE,NOCACHE" />
-        {% block favicon %}
-            <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
-        {% endblock %}
+{% with settings.multisite.Organisation as organisation_settings %}
+    <!DOCTYPE html>
+    <html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="{% block html_class %}no-js{% endblock %}">
+        <head>
+            <title>{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
 
-        {# Block where global CSS will go. #}
-        {% block styles %}{% endblock %}
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="created" content="{% now "jS M Y h:i" %}" />
+            <meta name="description" content="{% block description %}{% endblock %}" />
+            <meta name="viewport" content="{% block viewport %}width=device-width, initial-scale=1{% endblock %}" />
+            <meta name="robots" content="NOARCHIVE,NOCACHE" />
+            {% block favicon %}
+                <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
+            {% endblock %}
 
-        {# Additional CSS - specific to certain pages #}
-        {% block extrastyles %}{% endblock %}
+            {# Block where global CSS will go. #}
+            {% block styles %}{% endblock %}
 
-        {% block extrahead %}{% endblock %}
+            {# Additional CSS - specific to certain pages #}
+            {% block extrastyles %}{% endblock %}
 
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-        {% block tracking %}
-            {# Default to using Google analytics #}
-            {% include "oscar/partials/google_analytics.html" %}
-        {% endblock %}
-    </head>
+            {% block extrahead %}{% endblock %}
 
-    <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %} uk-background-muted">
-        {# Main content goes in this 'layout' block #}
-        {% block layout %}{% endblock %}
+            <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+            {% block tracking %}
+                {# Default to using Google analytics #}
+                {% include "oscar/partials/google_analytics.html" %}
+            {% endblock %}
+        </head>
 
-        {# Scripts loaded from a CDN. #}
-        {% block cdn_scripts %}
-            <!-- jQuery -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script>window.jQuery || document.write('<script src="{% static "oscar/js/jquery/jquery.min.js" %}"><\/script>')</script>
-        {% endblock %}
+        <body id="{% block body_id %}default{% endblock %}" class="{% block body_class %}default{% endblock %} uk-background-muted">
+            {# Main content goes in this 'layout' block #}
+            {% block layout %}{% endblock %}
 
-        {# Local scripts #}
-        {% block scripts %}
-        {% endblock %}
+            {# Scripts loaded from a CDN. #}
+            {% block cdn_scripts %}
+                <!-- jQuery -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>window.jQuery || document.write('<script src="{% static "oscar/js/jquery/jquery.min.js" %}"><\/script>')</script>
+            {% endblock %}
 
-        {# Additional JS scripts #}
-        {% block extrascripts %}{% endblock %}
+            {# Local scripts #}
+            {% block scripts %}
+            {% endblock %}
 
-        {# Block for body onload functions #}
-        <script>
-            $(function() {
-                {% block onbodyload %}{% endblock %}
-            });
-        </script>
+            {# Additional JS scripts #}
+            {% block extrascripts %}{% endblock %}
 
-        {# Page meta-data - this is populated by the 'metadata' template context processor #}
-    </body>
-</html>
+            {# Block for body onload functions #}
+            <script>
+                $(function() {
+                    {% block onbodyload %}{% endblock %}
+                });
+            </script>
+
+            {# Page meta-data - this is populated by the 'metadata' template context processor #}
+        </body>
+    </html>
+{% endwith %}

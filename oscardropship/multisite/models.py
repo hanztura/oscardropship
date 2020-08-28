@@ -13,7 +13,59 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
 
-from .abstracts import RelatedLink
+from .abstracts import RelatedLink, SocialMediaAbstractModel
+from wagtail_pages.schemas import Organization, PostalAddress
+
+
+@register_setting
+class Organisation(SocialMediaAbstractModel, BaseSetting):
+    """Details about this organisation"""
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    address_country = models.CharField(max_length=100, blank=True)
+    address_city = models.CharField(max_length=100, blank=True)
+    address_region = models.CharField(max_length=100, blank=True)
+    address_postal_code = models.CharField(max_length=50, blank=True)
+    address_street = models.CharField(max_length=100, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(blank=True)
+
+    @property
+    def simple_address(self):
+        if self.address_city:
+            return '{}, {}, {}'.format(
+                self.address_city,
+                self.address_region,
+                self.address_country,
+            )
+
+        return ''
+
+    @property
+    def schema_address(self):
+        address = PostalAddress(
+            address_country=self.address_country,
+            address_locality=self.address_city,
+            address_region=self.address_region,
+            postal_code=self.address_postal_code,
+            street_address=self.address_street,
+            name=self.name,
+            description='address of {}'.format(self.name),
+        )
+        return address
+
+    @property
+    def schema(self):
+        return Organization(
+            self.schema_address,
+            self.email,
+            self.phone_number,
+            [
+                self.twitter_url, self.facebook_url, self.linkedin_url
+            ],
+            self.name,
+            self.description
+        )
 
 
 @register_setting
@@ -22,6 +74,9 @@ class FooterSettings(BaseSetting, ClusterableModel):
     implemented above.
     """
     about = models.TextField(blank=True)
+    address = models.CharField(max_length=255, blank=True)
+    phone = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(blank=True)
 
     panels = [
         FieldPanel('about'),
