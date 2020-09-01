@@ -1,3 +1,4 @@
+{% load i18n %}
 <nav class="uk-navbar-container uk-padding-small" uk-navbar>
 
     <div class="nav-overlay uk-navbar-left">
@@ -15,16 +16,47 @@
 
     <div class="nav-overlay uk-navbar-right">
         <ul class="uk-iconnav">
-            <li>
+            <li uk-tooltip="Search">
                 <a
                     class="uk-padding-remove-horizontal"
                     uk-icon="icon: search"
                     uk-toggle="target: .nav-overlay; animation: uk-animation-slide-top"
                     href="#"></a>
             </li>
-            <li><a href="#" uk-icon="icon: user"></a></li>
-            <li><a href="#" uk-icon="icon: settings"></a></li>
-            <li><a href="#" uk-icon="icon: cart"></a></li>
+            <li class="uk-inline" uk-tooltip="My Account">
+                <a href="#" uk-icon="icon: user"></a>
+                <div uk-dropdown>
+                    <ul class="uk-nav uk-dropdown-nav">
+                        {% if user.is_authenticated %}
+                            <li>
+                                {% if num_unread_notifications > 0 %}
+                                    {# If user has new notifications - we change account link to go to inbox #}
+                                    <a href="{% url 'customer:notifications-inbox' %}">
+                                        <i class="uk-margin-small-right" uk-icon="icon: user"></i>
+                                        {% trans "Account" %}
+                                        <span class="label label-warning">{{ num_unread_notifications }}</span>
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'customer:summary' %}"><i class="uk-margin-small-right" uk-icon="icon: user"></i> {% trans "Account" %}</a>
+                                {% endif %}
+                            </li>
+                            {% if user.is_staff or perms.partner.dashboard_access %}
+                                <li><a href="{% url 'dashboard:index' %}"><i class="uk-margin-small-right" uk-icon="icon: home"></i> {% trans "Dashboard" %}</a></li>
+                            {% endif %}
+
+                            {% if user.is_staff and page %}
+                                <li><a href="{% url 'wagtailadmin_pages:edit' page.pk %}"><i class="uk-margin-small-right" uk-icon="icon: pencil"></i> {% trans "Edit this page" %}</a></li>
+                            {% endif %}
+
+                            <li><a id="logout_link" href="{% url 'customer:logout' %}"><i class="uk-margin-small-right" uk-icon="icon: sign-out"></i> {% trans "Logout" %}</a></li>
+                        {% else %}
+                            <li><a id="login_link" href="{% url 'customer:login' %}"><i class="uk-margin-small-right" uk-icon="icon: sign-in"></i> {% trans "Login or register" %}</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'basket:summary' %}"><i class="uk-margin-small-right" uk-icon="icon: cart"></i> View Cart</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li uk-tooltip="Cart"><a href="{% url 'basket:summary' %}" uk-icon="icon: cart"></a></li>
         </ul>
     </div>
 
