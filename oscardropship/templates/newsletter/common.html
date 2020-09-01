@@ -1,0 +1,18 @@
+{% extends "uikit/layout.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Newsletter" %}{% endblock title %}
+
+{% block extrahead %}
+    {% block header %}
+    {% endblock header %}
+{% endblock %}
+
+{% block content_wrapper %}
+    <div class="uk-child-width-auto uk-flex-center" uk-grid>
+        <div>
+			    {% block body %}{% endblock body %}
+        </div>
+    </div>
+{% endblock %}
