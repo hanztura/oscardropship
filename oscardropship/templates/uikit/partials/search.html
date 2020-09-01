@@ -1,0 +1,6 @@
+{% load i18n %}
+
+<form action="{% url 'search:search' %}" class="uk-search uk-search-navbar uk-width-1-1">
+    <label class="uk-text-muted" for="id_q"><small>What are you looking for?</small></label>
+    <input class="uk-search-input uk-text-uppercase" type="search" placeholder="{% trans "SEARCH PRODUCTS..." %}" name="q" id="id_q" autofocus>
+</form>

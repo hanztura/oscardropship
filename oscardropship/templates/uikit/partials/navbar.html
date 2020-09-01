@@ -1,6 +1,6 @@
 <nav class="uk-navbar-container uk-padding-small" uk-navbar>
 
-    <div class="uk-navbar-left">
+    <div class="nav-overlay uk-navbar-left">
 
         <a class="uk-navbar-item uk-logo uk-text-primary uk-text-lowercase" href="{{ homepage_url }}"><strong>{% block brand_title %}{{ organisation_settings.name }}{% endblock %}</strong></a>
 
@@ -13,12 +13,28 @@
 
     </div>
 
-    <div class="uk-navbar-right">
+    <div class="nav-overlay uk-navbar-right">
         <ul class="uk-iconnav">
-            <li><a href="#" uk-icon="icon: search"></a></li>
+            <li>
+                <a
+                    class="uk-padding-remove-horizontal"
+                    uk-icon="icon: search"
+                    uk-toggle="target: .nav-overlay; animation: uk-animation-slide-top"
+                    href="#"></a>
+            </li>
             <li><a href="#" uk-icon="icon: user"></a></li>
             <li><a href="#" uk-icon="icon: settings"></a></li>
             <li><a href="#" uk-icon="icon: cart"></a></li>
         </ul>
+    </div>
+
+    <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+
+        <div class="uk-navbar-item uk-width-expand">
+            {% include "uikit/partials/search.html" %}
+        </div>
+
+        <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+
     </div>
 </nav>
