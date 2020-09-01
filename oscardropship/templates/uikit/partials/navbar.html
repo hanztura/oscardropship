@@ -1,15 +1,12 @@
 {% load i18n %}
-<nav class="uk-navbar-container uk-padding-small" uk-navbar>
+<nav class="uk-visible@m uk-navbar-container uk-padding-small" uk-navbar>
 
     <div class="nav-overlay uk-navbar-left">
 
         <a class="uk-navbar-item uk-logo uk-text-primary uk-text-lowercase" href="{{ homepage_url }}"><strong>{% block brand_title %}{{ organisation_settings.name }}{% endblock %}</strong></a>
 
         <ul class="uk-navbar-nav">
-            <li class="uk-active"><a href="{{ homepage_url }}">Home</a></li>
-            <li><a href="#">Contact us</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="{% url 'catalogue:index' %}">Shop</a></li>
+            {% include "uikit/partials/navbar_primary.html" %}
         </ul>
 
     </div>
@@ -27,32 +24,7 @@
                 <a href="#" uk-icon="icon: user"></a>
                 <div uk-dropdown>
                     <ul class="uk-nav uk-dropdown-nav">
-                        {% if user.is_authenticated %}
-                            <li>
-                                {% if num_unread_notifications > 0 %}
-                                    {# If user has new notifications - we change account link to go to inbox #}
-                                    <a href="{% url 'customer:notifications-inbox' %}">
-                                        <i class="uk-margin-small-right" uk-icon="icon: user"></i>
-                                        {% trans "Account" %}
-                                        <span class="label label-warning">{{ num_unread_notifications }}</span>
-                                    </a>
-                                {% else %}
-                                    <a href="{% url 'customer:summary' %}"><i class="uk-margin-small-right" uk-icon="icon: user"></i> {% trans "Account" %}</a>
-                                {% endif %}
-                            </li>
-                            {% if user.is_staff or perms.partner.dashboard_access %}
-                                <li><a href="{% url 'dashboard:index' %}"><i class="uk-margin-small-right" uk-icon="icon: home"></i> {% trans "Dashboard" %}</a></li>
-                            {% endif %}
-
-                            {% if user.is_staff and page %}
-                                <li><a href="{% url 'wagtailadmin_pages:edit' page.pk %}"><i class="uk-margin-small-right" uk-icon="icon: pencil"></i> {% trans "Edit this page" %}</a></li>
-                            {% endif %}
-
-                            <li><a id="logout_link" href="{% url 'customer:logout' %}"><i class="uk-margin-small-right" uk-icon="icon: sign-out"></i> {% trans "Logout" %}</a></li>
-                        {% else %}
-                            <li><a id="login_link" href="{% url 'customer:login' %}"><i class="uk-margin-small-right" uk-icon="icon: sign-in"></i> {% trans "Login or register" %}</a></li>
-                        {% endif %}
-                        <li><a href="{% url 'basket:summary' %}"><i class="uk-margin-small-right" uk-icon="icon: cart"></i> View Cart</a></li>
+                        {% include "uikit/partials/navbar_accounts.html" %}
                     </ul>
                 </div>
             </li>
@@ -67,6 +39,69 @@
         </div>
 
         <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+
+    </div>
+</nav>
+
+<nav class="uk-hidden@m uk-flex-center uk-padding-small" style="z-index: 980;" uk-sticky="top: 20vh" uk-grid>
+    {# navigation links #}
+    <div class="uk-width-1-1 nav-overlay">
+        <div class="uk-flex-around uk-flex">
+            <div>
+                <a href="#" uk-toggle="target: #offcanvas-nav-primary" uk-icon="icon: menu"></a>
+            </div>
+            <div>
+                <a
+                    class="uk-padding-remove-horizontal"
+                    uk-icon="icon: search"
+                    uk-toggle="target: .nav-overlay; animation: uk-animation-slide-top"
+                    href="#"></a>
+            </div>
+            <div>
+                <a href="#" uk-toggle="target: #offcanvas-nav-account" uk-icon="icon: user"></a>
+            </div>
+            <div>
+                <a href="{% url 'basket:summary' %}" uk-icon="icon: cart"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-overlay uk-width-1-1" hidden>
+        <div uk-grid>
+            <div class="uk-width-5-6">
+                {% include "uikit/partials/search.html" %}
+            </div>
+            <div class="uk-width-expand">
+                <a uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+            </div>
+        </div>
+
+
+    </div>
+</nav>
+<div class="uk-hidden@m uk-padding-small" uk-grid>
+    {# logo #}
+    <div class="uk-width-1-1 uk-text-center">
+        <a class="uk-logo uk-text-primary uk-text-lowercase" href="{{ homepage_url }}"><strong>{{ organisation_settings.name }}</strong></a>
+    </div>
+</div>
+
+<nav id="offcanvas-nav-primary" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+
+        <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+            {% include "uikit/partials/navbar_primary.html" %}
+        </ul>
+
+    </div>
+</nav>
+
+<nav id="offcanvas-nav-account" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+
+        <ul class="uk-nav uk-nav-default uk-nav-center uk-margin-auto-vertical">
+            {% include "uikit/partials/navbar_accounts.html" %}
+        </ul>
 
     </div>
 </nav>
