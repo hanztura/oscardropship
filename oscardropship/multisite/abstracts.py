@@ -2,7 +2,10 @@ from django.db import models
 
 from oscar.core.loading import get_model
 from wagtail.admin.edit_handlers import (
-    FieldPanel, PageChooserPanel, MultiFieldPanel)
+    FieldPanel,
+    PageChooserPanel,
+    MultiFieldPanel,
+)
 
 Category = get_model('catalogue', 'Category')
 
@@ -90,6 +93,14 @@ class SocialMediaAbstractModel(models.Model):
 
     class Meta:
         abstract = True
+
+    panels = [
+        FieldPanel('twitter_handle'),
+        FieldPanel('facebook_username'),
+        FieldPanel('linkedin_url'),
+        FieldPanel('pinterest_url'),
+        FieldPanel('instagram_url'),
+    ]
 
     @property
     def twitter_url(self):

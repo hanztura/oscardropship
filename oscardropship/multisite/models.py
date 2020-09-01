@@ -8,9 +8,10 @@ from wagtail.admin.edit_handlers import (
     FieldPanel,
     InlinePanel,
     MultiFieldPanel,
+    PageChooserPanel,
 )
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.core.models import Orderable
+from wagtail.core.models import Orderable, Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from .abstracts import RelatedLink, SocialMediaAbstractModel, AuthorityItem
@@ -29,6 +30,33 @@ class Organisation(SocialMediaAbstractModel, BaseSetting):
     address_street = models.CharField(max_length=100, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
+    about_page = models.ForeignKey(
+        Page,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True
+    )
+    contact_page = models.ForeignKey(
+        Page,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="contact_on_organisation_setting"
+    )
+
+    panels = SocialMediaAbstractModel.panels + [
+        PageChooserPanel('about_page'),
+        PageChooserPanel('contact_page'),
+        FieldPanel('name'),
+        FieldPanel('description'),
+        FieldPanel('address_country'),
+        FieldPanel('address_city'),
+        FieldPanel('address_region'),
+        FieldPanel('address_postal_code'),
+        FieldPanel('address_street'),
+        FieldPanel('phone_number'),
+        FieldPanel('email'),
+    ]
 
     @property
     def simple_address(self):

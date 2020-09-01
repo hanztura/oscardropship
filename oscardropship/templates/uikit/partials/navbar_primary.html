@@ -1,4 +1,4 @@
 <li class="uk-active"><a href="{{ homepage_url }}">Home</a></li>
-<li><a href="#">Contact us</a></li>
-<li><a href="#">About</a></li>
+<li><a href="{{ organisation_settings.contact_page.get_url|default_if_none:'#' }}">Contact us</a></li>
+<li><a href="{{ organisation_settings.about_page.get_url|default_if_none:'#' }}">About</a></li>
 <li><a href="{% url 'catalogue:index' %}">Shop</a></li>
