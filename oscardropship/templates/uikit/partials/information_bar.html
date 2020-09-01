@@ -1,11 +1,29 @@
-<nav class="uk-navbar-container uk-navbar-transparent uk-padding-small uk-background-primary uk-light" uk-navbar>
+<nav class="uk-visible@m uk-navbar-container uk-navbar-transparent uk-padding-small uk-background-primary uk-light uk-text-uppercase" uk-navbar>
     <!-- Contact -->
     <div class="uk-navbar-left">
-        <a class="uk-padding-small uk-padding-remove-vertical uk-link-reset" href="mailto:{{ organisation_settings.email }}"><span uk-icon="icon: mail"></span> {{ organisation_settings.email }}</a>
-        <a class="uk-padding-small uk-padding-remove-vertical uk-link-reset" href="{{ organisation_settings.messenger_url }}" target="_blank"><span uk-icon="icon: comment"></span> Messenger</a>
+        <a class="uk-padding-small uk-padding-remove-vertical uk-link-reset" href="mailto:{{ organisation_settings.email }}" target="_blank"><span class="uk-margin-small-right" uk-icon="icon: mail"></span> {{ organisation_settings.email }}</a>
+        <a class="uk-padding-small uk-padding-remove-vertical uk-link-reset" href="{{ organisation_settings.messenger_url }}" target="_blank"><span class="uk-margin-small-right" uk-icon="icon: comment"></span> Messenger</a>
     </div>
     <!-- Social Media Icons -->
     <div class="uk-navbar-right">
+      <ul class="uk-iconnav uk-link-reset">
+        {% include "uikit/partials/social_media_links.html" %}
+      </ul>
+    </div>
+</nav>
+
+<nav class="uk-hidden@m uk-flex-center uk-background-primary uk-light uk-padding-small uk-text-uppercase" uk-grid>
+    <div>
+        <div class="uk-child-width-1-1 uk-flex-center" uk-grid>
+            <div class="uk-text-center">
+                <a class="uk-padding-small uk-padding-remove-vertical uk-link-reset" href="mailto:{{ organisation_settings.email }}" target="_blank"><span class="uk-margin-small-right" uk-icon="icon: mail"></span> {{ organisation_settings.email }}</a>
+            </div>
+            <div class="uk-text-center uk-margin-small-top">
+                <a class="uk-padding-small uk-padding-remove-vertical uk-link-reset" href="{{ organisation_settings.messenger_url }}" target="_blank"><span class="uk-margin-small-right" uk-icon="icon: comment"></span> Messenger</a>
+            </div>
+        </div>
+    </div>
+    <div class="uk-margin-small-top">
       <ul class="uk-iconnav uk-link-reset">
         {% include "uikit/partials/social_media_links.html" %}
       </ul>
