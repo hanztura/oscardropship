@@ -73,7 +73,7 @@
   </section>
 
 <!-- Micro Footer -->
-<nav class="uk-navbar-container uk-padding-small uk-padding-remove-vertical" style="background-color: black;" uk-navbar>
+<nav class="uk-visible@m uk-navbar-container uk-padding-small uk-padding-remove-vertical" style="background-color: black;" uk-navbar>
 
     <div class="uk-navbar-left">
 
@@ -82,6 +82,20 @@
     </div>
 
     <div class="uk-navbar-right">
+        <ul class="uk-iconnav uk-text-muted" uk-tooltip="Your security is our priority. 🔒">
+          {% for authority in footer_settings.footer_authority_items.all %}
+            <li><img {% if authority.height  %}style="height: {{ authority.height}}"{% endif %} data-src="{{ authority.image_link }}" alt="{{ authority.name }}" uk-img></li>
+          {% endfor %}
+        </ul>
+    </div>
+</nav>
+<nav class="uk-hidden@m uk-child-width-1-1 uk-padding-small" style="background-color: black;" uk-grid>
+    <div>
+        <p class="uk-text-large uk-text-primary uk-text-lowercase" href="#"><strong>{{ organisation_settings.name }}</strong></p>
+        <p class="uk-text-muted" href="#">© {{ organisation_settings.name }} {% now 'Y' %}. All Rights Reserved</p>
+    </div>
+
+    <div>
         <ul class="uk-iconnav uk-text-muted" uk-tooltip="Your security is our priority. 🔒">
           {% for authority in footer_settings.footer_authority_items.all %}
             <li><img {% if authority.height  %}style="height: {{ authority.height}}"{% endif %} data-src="{{ authority.image_link }}" alt="{{ authority.name }}" uk-img></li>
